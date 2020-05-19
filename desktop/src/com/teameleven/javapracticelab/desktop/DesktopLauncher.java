@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		config.useGL30 = true;
 		config.width = 1024;
 		config.height = 768;
+		config.resizable = false;
 		new LwjglApplication(new CrossingUseang(), config);
 	}
 }
