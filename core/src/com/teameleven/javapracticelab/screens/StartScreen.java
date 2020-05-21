@@ -5,15 +5,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.teameleven.javapracticelab.UsasengCrossing;
+import com.teameleven.javapracticelab.CrossingUsaseng;
 
 public class StartScreen implements Screen {
 
-    final private UsasengCrossing game;
+    final private CrossingUsaseng game;
+    private float elapsed = 0.0f;
     SpriteBatch batch;
     Texture img;
 
-    public StartScreen(UsasengCrossing game) {
+    public StartScreen(final CrossingUsaseng game) {
         this.game = game;
         batch = new SpriteBatch();
 
@@ -33,6 +34,12 @@ public class StartScreen implements Screen {
         batch.begin();
         batch.draw(img, (1024-639)/2, (768 - 246)/2);
         batch.end();
+
+        elapsed += delta;
+
+        if (elapsed > 4) {
+            game.setScreen(new StartMenuScreen(game));
+        }
     }
 
     @Override
