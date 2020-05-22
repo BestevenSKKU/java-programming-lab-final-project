@@ -7,11 +7,11 @@ import com.teameleven.javapracticelab.CrossingUsaseng;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "¸ğ¿©ºÁ¿ä À¯»ıÀÇ ½£";
+		config.title = "ëª¨ì—¬ë´ìš” ìœ ìƒì˜ ìˆ²";
 		config.useGL30 = true;
 		config.width = 1024;
 		config.height = 768;
-		config.resizable = false;
+		config.resizable = true;
 		new LwjglApplication(new CrossingUsaseng(), config);
 	}
 }
