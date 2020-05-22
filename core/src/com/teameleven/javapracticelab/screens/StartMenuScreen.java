@@ -35,7 +35,7 @@ public class StartMenuScreen implements Screen {
         System.out.println(buttonWidth + "  " + buttonHeight);
 
         // Button
-        Button btnNewGame = new TextButton("New game", Skins.glassy);
+        Button btnNewGame = new TextButton("New game", Skins.craftacular);
         btnNewGame.setSize(buttonWidth,buttonHeight);
         btnNewGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(3 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
         btnNewGame.addListener(new InputListener() {
@@ -74,6 +74,36 @@ public class StartMenuScreen implements Screen {
             }
         });
         stage.addActor(btnNewGame);
+
+        Button btnLoadGame = new TextButton("Load game", Skins.craftacular);
+        btnLoadGame.setSize(buttonWidth,buttonHeight);
+        btnLoadGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(2 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
+        btnLoadGame.addListener(new InputListener() {
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(btnLoadGame);
+
+        Button btnExitGame = new TextButton("Exit game", Skins.craftacular);
+        btnExitGame.setSize(buttonWidth,buttonHeight);
+        btnExitGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(1 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
+        btnExitGame.addListener(new InputListener() {
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(btnExitGame);
     }
 
     @Override

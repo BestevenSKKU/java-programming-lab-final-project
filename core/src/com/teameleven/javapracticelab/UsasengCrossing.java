@@ -28,12 +28,6 @@ public class UsasengCrossing extends Game {
 	    batch = new SpriteBatch();
 	}
 
-	public void gotoStartScreen(){
-		StartScreen startScreen = new StartScreen(this);
-		setScreen(startScreen);
-	}
-
-
 	@Override
 	public void render () {
         Gdx.gl.glClearColor(1, 1, 1, 1);
