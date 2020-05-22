@@ -21,12 +21,6 @@ public class UsasengCrossing extends Game {
 		this.setScreen(new StartScreen(this));
 	}
 
-	public void gotoStartScreen(){
-		StartScreen startScreen = new StartScreen(this);
-		setScreen(startScreen);
-	}
-
-
 	@Override
 	public void render () {
 		super.render();

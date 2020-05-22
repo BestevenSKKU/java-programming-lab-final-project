@@ -11,7 +11,7 @@ public class StartScreen implements Screen {
 
     final private UsasengCrossing game;
     private float elapsed = 0.0f;
-    final float LOADING_TIME = 0.1f;
+    final float LOADING_TIME = 1.0f;
     SpriteBatch batch;
     Texture img;
 
