@@ -1,0 +1,24 @@
+{
+	com.badlogic.gdx.graphics.g2d.BitmapFont: {
+		font: {
+			file: korean.fnt
+		}
+	},
+	com.badlogic.gdx.graphics.Color: {
+		black: {
+			r: 0
+			g: 0
+			b: 0
+			a: 1
+		}
+	},
+	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+		default: {
+			font: font
+		}
+		black: {
+			font: font
+			fontColor: black
+		}
+	}
+}

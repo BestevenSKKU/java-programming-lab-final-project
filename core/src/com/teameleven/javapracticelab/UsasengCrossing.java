@@ -11,7 +11,7 @@ import com.teameleven.javapracticelab.screens.StartMenuScreen;
 import com.teameleven.javapracticelab.screens.StartScreen;
 
 
-public class CrossingUsaseng extends Game {
+public class UsasengCrossing extends Game {
 	SpriteBatch batch;
 
 
