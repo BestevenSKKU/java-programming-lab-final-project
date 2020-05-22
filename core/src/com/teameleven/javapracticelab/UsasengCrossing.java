@@ -31,6 +31,24 @@ public class UsasengCrossing extends Game {
 	public void render () {
 		super.render();
 	}
+	
+	 public void spriteControl() {
+
+	        if(Gdx.input.isKeyPressed(Keys.UP)) {
+	            spriteYposition+=4;
+	        }
+	        if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+	            spriteYposition-=4;
+	        }
+
+	        if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+	            spriteXposition-=4;
+	        }
+
+	        if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+	            spriteXposition+=4;
+	        }
+	    }
 
 	@Override
 	public void dispose () {
