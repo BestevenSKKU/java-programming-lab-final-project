@@ -44,18 +44,18 @@ public class UsasengCrossing extends Game {
 	 public void spriteControl() {
 
 	        if(Gdx.input.isKeyPressed(Keys.UP)) {
-	            spriteYposition+=4;
+	            spriteYposition+=5;
 	        }
 	        if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-	            spriteYposition-=4;
+	            spriteYposition-=5;
 	        }
 
 	        if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-	            spriteXposition-=4;
+	            spriteXposition-=5;
 	        }
 
 	        if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	            spriteXposition+=4;
+	            spriteXposition+=5;
 	        }
 	    }
 
