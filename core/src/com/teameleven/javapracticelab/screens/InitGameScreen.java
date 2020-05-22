@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
+import com.teameleven.javapracticelab.utils.Skins;
 
 public class InitGameScreen implements Screen {
     final UsasengCrossing game;
@@ -26,14 +27,14 @@ public class InitGameScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        Skin korean = new Skin(Gdx.files.internal("skin/korean.json"));
 
-        lblPlayer = new Label(playerName, korean, "black");
+
+        lblPlayer = new Label(playerName, Skins.korean, "black");
         lblPlayer.setSize(Gdx.graphics.getWidth(),row_height);
         lblPlayer.setPosition(0,row_height+250);
         lblPlayer.setAlignment(Align.center);
         stage.addActor(lblPlayer);
-        lblIsland = new Label(islandName, korean, "black");
+        lblIsland = new Label(islandName, Skins.korean, "black");
         lblIsland.setSize(Gdx.graphics.getWidth(),row_height);
         lblIsland.setPosition(0,row_height+250-50);
         lblIsland.setAlignment(Align.center);

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
+import com.teameleven.javapracticelab.utils.Skins;
 
 public class StartMenuScreen implements Screen {
     final UsasengCrossing game;
@@ -33,10 +34,8 @@ public class StartMenuScreen implements Screen {
 
         System.out.println(buttonWidth + "  " + buttonHeight);
 
-        Skin glassy = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-
         // Button
-        Button btnNewGame = new TextButton("New game", glassy);
+        Button btnNewGame = new TextButton("New game", Skins.glassy);
         btnNewGame.setSize(buttonWidth,buttonHeight);
         btnNewGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(3 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
         btnNewGame.addListener(new InputListener() {
@@ -51,23 +50,23 @@ public class StartMenuScreen implements Screen {
 
                     @Override
                     public void canceled() {
-                        Gdx.input.getTextInput(this, "º∂ ¿Ã∏ß", "", "");
+                        Gdx.input.getTextInput(this, "ÏÑ¨ Ïù¥Î¶Ñ", "", "");
                     }
                 };
                 Input.TextInputListener playerNameInputListener = new Input.TextInputListener() {
                     @Override
                     public void input(String text) {
                         playerName[0] = text;
-                        Gdx.input.getTextInput(islandNameInputListener, "º∂ ¿Ã∏ß", "", "");
+                        Gdx.input.getTextInput(islandNameInputListener, "ÏÑ¨ Ïù¥Î¶Ñ", "", "");
                     }
 
                     @Override
                     public void canceled() {
-                        Gdx.input.getTextInput(this, "«√∑π¿ÃæÓ ¿Ã∏ß", "", "");
+                        Gdx.input.getTextInput(this, "ÌîåÎ†àÏù¥Ïñ¥ Ïù¥Î¶Ñ", "", "");
                     }
                 };
 
-                Gdx.input.getTextInput(playerNameInputListener, "«√∑π¿ÃæÓ ¿Ã∏ß", "", "");
+                Gdx.input.getTextInput(playerNameInputListener, "ÌîåÎ†àÏù¥Ïñ¥ Ïù¥Î¶Ñ", "", "");
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
