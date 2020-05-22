@@ -24,7 +24,7 @@ public class UsasengCrossing extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		this.setScreen(new StartScreen(this));
-	    sprite = new Sprite(new Texture("us.png"));
+	    sprite = new Sprite(new Texture("player.png"));
 	    batch = new SpriteBatch();
 	}
 
