@@ -7,7 +7,7 @@ import com.teameleven.javapracticelab.UsasengCrossing;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "¸ð¿©ºÁ¿ä µ¿¹°ÀÇ ½£";
+		config.title = "¸ð¿©ºÁ¿ä À¯»ýÀÇ ½£";
 		config.useGL30 = true;
 		config.width = 1024;
 		config.height = 768;
