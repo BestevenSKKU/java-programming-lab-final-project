@@ -1,19 +1,15 @@
 package com.teameleven.javapracticelab.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
+import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.utils.Skins;
 
 public class InitGameScreen implements Screen {
@@ -22,11 +18,9 @@ public class InitGameScreen implements Screen {
     private Label lblPlayer;
     private Label lblIsland;
 
-    Sprite sprite;
+    Player player;
     SpriteBatch batch;
 
-    float spriteXposition;
-    float spriteYposition;
 
     public InitGameScreen(final UsasengCrossing game, String playerName, String islandName) {
         this.game = game;
@@ -51,7 +45,7 @@ public class InitGameScreen implements Screen {
         lblIsland.setAlignment(Align.center);
         stage.addActor(lblIsland);
 
-        sprite = new Sprite(new Texture("player.png"));
+        player = new Player(playerName);
     }
 
     @Override
@@ -68,29 +62,8 @@ public class InitGameScreen implements Screen {
 
 
         batch.begin();
-        sprite.setPosition(spriteXposition, spriteYposition);
-        sprite.draw(batch);
+        player.action(batch);
         batch.end();
-
-        spriteControl();
-    }
-
-    public void spriteControl() {
-
-        if(Gdx.input.isKeyPressed(Keys.W)) {
-            spriteYposition+=5;
-        }
-        if(Gdx.input.isKeyPressed(Keys.S)) {
-            spriteYposition-=5;
-        }
-
-        if(Gdx.input.isKeyPressed(Keys.A)) {
-            spriteXposition-=5;
-        }
-
-        if(Gdx.input.isKeyPressed(Keys.D)) {
-            spriteXposition+=5;
-        }
     }
 
     @Override
