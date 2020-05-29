@@ -9,9 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.sun.tools.javac.jvm.Gen;
 import com.teameleven.javapracticelab.UsasengCrossing;
 import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.characters.Villager;
+import com.teameleven.javapracticelab.utils.Gender;
 import com.teameleven.javapracticelab.utils.Skins;
 
 public class InitGameScreen implements Screen {
@@ -26,7 +28,7 @@ public class InitGameScreen implements Screen {
 
     OrthographicCamera camera1;
 
-    public InitGameScreen(final UsasengCrossing game, String playerName, String islandName) {
+    public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender) {
         this.game = game;
 
         System.out.println(playerName + "  " + islandName);
@@ -49,8 +51,13 @@ public class InitGameScreen implements Screen {
         lblIsland.setAlignment(Align.left);
         stage.addActor(lblIsland);
 
-        player = new Player(playerName);
-        villager = new Villager(playerName);
+        Gender playerGender = Gender.MALE;
+        if (gender.equals("F") || gender.equals("f")) {
+            playerGender = Gender.FEMALE;
+        }
+
+        player = new Player(playerName, playerGender);
+        villager = new Villager("잭슨", Gender.MALE);
         
         camera1 = new OrthographicCamera(1024,768);
         camera1.position.set(player.get_x(),player.get_y(),0);

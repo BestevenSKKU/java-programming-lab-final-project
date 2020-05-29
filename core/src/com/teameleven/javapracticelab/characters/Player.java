@@ -7,13 +7,16 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.teameleven.javapracticelab.utils.Direction;
+import com.teameleven.javapracticelab.utils.Gender;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 
 public class Player extends Sprite {
-    public enum Direction {
-        LEFT, RIGHT
-    }
     final private String name;
+    final private Gender gender;
 
     private int speed = 5;
 
@@ -28,12 +31,16 @@ public class Player extends Sprite {
     
     float elapsedTime;
     
-    public Player(String name) {
+    public Player(String name, Gender gender) {
         super(new Texture("player_m.png"));
+        Map<Gender, String> textureMap = new EnumMap<Gender, String>(Gender.class);
+        textureMap.put(Gender.MALE, "m");
+        textureMap.put(Gender.FEMALE, "f");
         this.name = name;
+        this.gender = gender;
         
-        img[Direction.LEFT.ordinal()] = new Texture("player_walk_l.png");
-        img[Direction.RIGHT.ordinal()] = new Texture("player_walk_r.png");
+        img[Direction.LEFT.ordinal()] = new Texture("player_" + textureMap.get(gender) + "_walk_l.png");
+        img[Direction.RIGHT.ordinal()] = new Texture("player_" + textureMap.get(gender) + "_walk_r.png");
         TextureRegion[][][] tmpFrames = new TextureRegion[2][][];
         tmpFrames[Direction.LEFT.ordinal()] = TextureRegion.split(
                 img[Direction.LEFT.ordinal()],

@@ -22,6 +22,7 @@ public class StartMenuScreen implements Screen {
     final boolean[] flg = {false};
     final String[] playerName = new String[1];
     final String[] islandName = new String[1];
+    final String[] gender = new String[1];
 
     public StartMenuScreen(final UsasengCrossing game) {
         this.game = game;
@@ -41,11 +42,24 @@ public class StartMenuScreen implements Screen {
         btnNewGame.addListener(new InputListener() {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                final Input.TextInputListener genderInputListener = new Input.TextInputListener() {
+                    @Override
+                    public void input(String text) {
+                        gender[0] = text;
+                        flg[0] = true;
+
+                    }
+
+                    @Override
+                    public void canceled() {
+                        Gdx.input.getTextInput(this, "성별 (m, f)", "", "");
+                    }
+                };
                 final Input.TextInputListener islandNameInputListener = new Input.TextInputListener() {
                     @Override
                     public void input(String text) {
                         islandName[0] = text;
-                        flg[0] = true;
+                        Gdx.input.getTextInput(genderInputListener, "성별 (m, f)", "", "");
                     }
 
                     @Override
@@ -119,7 +133,7 @@ public class StartMenuScreen implements Screen {
         stage.draw();
 
         if (flg[0]) {
-            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0]));
+            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0]));
         }
     }
 

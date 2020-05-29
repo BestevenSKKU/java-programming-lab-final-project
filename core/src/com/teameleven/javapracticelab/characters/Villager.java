@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
+import com.teameleven.javapracticelab.utils.Gender;
 
 
 public class Villager extends Sprite {
     final private String name;
+    final private Gender gender;
 
     private int speed = 5;
 
@@ -28,10 +29,10 @@ public class Villager extends Sprite {
     
     float elapsedTime;
     
-    public Villager(String name) {
+    public Villager(String name, Gender gender) {
         super(new Texture("villager.png"));
         this.name = name;
-        
+        this.gender = gender;
     }
 
     public void action(Batch batch) {
