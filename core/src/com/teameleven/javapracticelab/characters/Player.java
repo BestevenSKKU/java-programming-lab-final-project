@@ -118,4 +118,11 @@ public class Player extends Sprite {
             this.setRegion(animationFrame[previousDirection.ordinal()][0]);
         }
     }
+    
+    public float get_x() {
+    	return positionX;
+    }
+    public float get_y() {
+    	return positionY;
+    }
 }
