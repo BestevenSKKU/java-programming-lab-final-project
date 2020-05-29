@@ -115,4 +115,11 @@ public class Player extends Sprite {
         
         if (changed == 0) {this.setRegion(animationFrames[0]);}
     }
+    
+    public float get_x() {
+    	return positionX;
+    }
+    public float get_y() {
+    	return positionY;
+    }
 }
