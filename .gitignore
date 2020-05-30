@@ -118,3 +118,11 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/xcshareddata
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
+
+## nodejs
+/server/node_modules
+
+## build jar
+/desktop/out
+/out
+META-INF

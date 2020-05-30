@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.teameleven.javapracticelab.texture.Textures;
 import com.teameleven.javapracticelab.utils.Direction;
 import com.teameleven.javapracticelab.utils.Gender;
 
@@ -32,15 +33,12 @@ public class Player extends Sprite {
     float elapsedTime;
     
     public Player(String name, Gender gender) {
-        super(new Texture("player_m.png"));
-        Map<Gender, String> textureMap = new EnumMap<Gender, String>(Gender.class);
-        textureMap.put(Gender.MALE, "m");
-        textureMap.put(Gender.FEMALE, "f");
+        super(gender == Gender.MALE ? Textures.malePlayerTexture : Textures.femalePlayerTexture);
         this.name = name;
         this.gender = gender;
         
-        img[Direction.LEFT.ordinal()] = new Texture("player_" + textureMap.get(gender) + "_walk_l.png");
-        img[Direction.RIGHT.ordinal()] = new Texture("player_" + textureMap.get(gender) + "_walk_r.png");
+        img[Direction.LEFT.ordinal()] = gender == Gender.MALE ? Textures.maleAnimationLeftTexture : Textures.femaleAnimationLeftTexture;
+        img[Direction.RIGHT.ordinal()] = gender == Gender.MALE ? Textures.maleAnimationRightTexture : Textures.femaleAnimationRightTexture;
         TextureRegion[][][] tmpFrames = new TextureRegion[2][][];
         tmpFrames[Direction.LEFT.ordinal()] = TextureRegion.split(
                 img[Direction.LEFT.ordinal()],
@@ -125,11 +123,11 @@ public class Player extends Sprite {
             this.setRegion(animationFrame[previousDirection.ordinal()][0]);
         }
     }
-    
-    public float get_x() {
-    	return positionX;
+
+    public String getName() {
+        return this.name;
     }
-    public float get_y() {
-    	return positionY;
+    public Gender getGender() {
+        return this.gender;
     }
 }
