@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.sun.tools.javac.jvm.Gen;
 import com.teameleven.javapracticelab.UsasengCrossing;
 import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.characters.Villager;
