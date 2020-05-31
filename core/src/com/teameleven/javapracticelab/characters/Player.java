@@ -120,7 +120,13 @@ public class Player extends Sprite {
         }
         
         if (directionChanged == false) {
-            this.setRegion(animationFrame[previousDirection.ordinal()][0]);
+            if (previousDirection == Direction.LEFT) {
+            	this.setRegion(animationFrame[previousDirection.ordinal()][0]);
+            }
+            else if (previousDirection == Direction.RIGHT) {
+            	this.setRegion(animationFrame[previousDirection.ordinal()][2]);
+            }
+            
         }
     }
 
