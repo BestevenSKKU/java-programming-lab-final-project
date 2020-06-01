@@ -1,13 +1,18 @@
 package com.teameleven.javapracticelab.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
@@ -40,7 +45,6 @@ public class InitGameScreen implements Screen {
     HashMap<String, Player> friendlyPlayers;
     Villager villager;
     SpriteBatch batch;
-
     OrthographicCamera camera1;
 
     public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender) {
@@ -50,7 +54,33 @@ public class InitGameScreen implements Screen {
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
+        
+        //inventory Button --------------------------------------- bug present
+        
+        int buttonWidth = Gdx.graphics.getWidth() / 5;
+        int buttonHeight = Gdx.graphics.getHeight() / 12;
+        
+        Button inventory = new TextButton("Inventory", Skins.craftacular);
+        inventory.setSize(buttonWidth,buttonHeight);
+        inventory.setPosition(0,0);
+        inventory.addListener(new InputListener() {
+        	
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen() ));
+            }
+            
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+               
+        });
+        stage.addActor(inventory);
+        
+        //----------------------------------------------------------
+        
+        
         batch = new SpriteBatch();
 
         lblPlayer = new Label(playerName, Skins.korean, "black");
@@ -83,7 +113,7 @@ public class InitGameScreen implements Screen {
 
     @Override
     public void show() {
-
+    	
     }
 
     @Override
@@ -151,7 +181,7 @@ public class InitGameScreen implements Screen {
 
     public void connectSocket() {
         try {
-            socket = IO.socket("http://localhost:8080");
+            socket = IO.socket("http://usaeng-crossing.kro.kr/");
             socket.connect();
         }
         catch (Exception e) {
