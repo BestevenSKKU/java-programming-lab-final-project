@@ -51,7 +51,7 @@ public class InventoryScreen implements Screen {
 
            
     });
-    stage.addActor(back);
+    //stage.addActor(back);
     
     }
     
@@ -68,12 +68,10 @@ public class InventoryScreen implements Screen {
         stage.act();
         stage.draw();
 
-        /*
-        if(Gdx.input.isKeyPressed(Input.Keys.E)) {
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(this.initGameScreen);
         }
-
-         */
     }
 
     @Override

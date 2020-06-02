@@ -57,41 +57,6 @@ public class InitGameScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         
-        //inventory Button --------------------------------------- bug present
-
-        
-        int buttonWidth = Gdx.graphics.getWidth() / 5;
-        int buttonHeight = Gdx.graphics.getHeight() / 12;
-
-        
-        inventory = new TextButton("Inventory", Skins.craftacular);
-        inventory.setSize(buttonWidth,buttonHeight);
-        inventory.setPosition(0,0);
-        inventory.addListener(new InputListener() {
-        	
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-            	Gdx.app.log("ButtenEvent", "Inventory touchup");
-                inventoryOpenFlg[0] = true;
-                Gdx.app.log("ButtenEvent", "Set Flag true");
-                return;
-            }
-            
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("ButtenEvent", "Inventory touchdown");
-                return true;
-            }
-               
-        });
-        inventory.setName("btnInventory");
-        stage.addActor(inventory);
-
-
-        
-        //----------------------------------------------------------
-        
-        
         batch = new SpriteBatch();
 
         lblPlayer = new Label(playerName, Skins.korean, "black");
@@ -192,7 +157,7 @@ public class InitGameScreen implements Screen {
         });
         inventory.setName("btnInventory");
         inventory.setTouchable(Touchable.enabled);
-        stage.addActor(inventory);
+        //stage.addActor(inventory);
         System.out.println("-------------after created-----------");
 
         for(Actor actor : stage.getActors())
