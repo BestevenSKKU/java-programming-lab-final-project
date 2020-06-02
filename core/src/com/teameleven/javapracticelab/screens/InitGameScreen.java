@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -47,6 +45,10 @@ public class InitGameScreen implements Screen {
     SpriteBatch batch;
     OrthographicCamera camera1;
 
+    Button inventory;
+
+    boolean[] inventoryOpenFlg = {false};
+
     public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender) {
         this.game = game;
 
@@ -56,27 +58,36 @@ public class InitGameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         
         //inventory Button --------------------------------------- bug present
+
         
         int buttonWidth = Gdx.graphics.getWidth() / 5;
         int buttonHeight = Gdx.graphics.getHeight() / 12;
+
         
-        Button inventory = new TextButton("Inventory", Skins.craftacular);
+        inventory = new TextButton("Inventory", Skins.craftacular);
         inventory.setSize(buttonWidth,buttonHeight);
         inventory.setPosition(0,0);
         inventory.addListener(new InputListener() {
         	
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-            	game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen() ));
+            	Gdx.app.log("ButtenEvent", "Inventory touchup");
+                inventoryOpenFlg[0] = true;
+                Gdx.app.log("ButtenEvent", "Set Flag true");
+                return;
             }
             
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("ButtenEvent", "Inventory touchdown");
                 return true;
             }
                
         });
+        inventory.setName("btnInventory");
         stage.addActor(inventory);
+
+
         
         //----------------------------------------------------------
         
@@ -136,27 +147,83 @@ public class InitGameScreen implements Screen {
         camera1.position.set(player.getX()+100,player.getY()+100,0);
         camera1.update();
         batch.setProjectionMatrix(camera1.combined);
+
+        if (inventoryOpenFlg[0]) {
+            Gdx.app.log("ButtenEvent", "Flag catch");
+            inventoryOpenFlg[0] = false;
+            game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen() ));
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.E)) {
+            game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen() ));
+        }
         
     }
 
     @Override
     public void resize(int width, int height) {
+        System.out.println("resize");
+
+
+        System.out.println("-----------before created----------------");
+
+        for(Actor actor : stage.getActors())
+        {
+            System.out.println(actor.getName());
+        }
+
+
+
+        inventory = new TextButton("Inventory", Skins.craftacular);
+        int buttonWidth = Gdx.graphics.getWidth() / 5;
+        int buttonHeight = Gdx.graphics.getHeight() / 12;
+        inventory.setSize(buttonWidth,buttonHeight);
+        inventory.setPosition(0,0);
+        inventory.addListener(new InputListener() {
+
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                inventoryOpenFlg[0] = true;
+            }
+
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        inventory.setName("btnInventory");
+        inventory.setTouchable(Touchable.enabled);
+        stage.addActor(inventory);
+        System.out.println("-------------after created-----------");
+
+        for(Actor actor : stage.getActors())
+        {
+            System.out.println(actor.getName());
+        }
+
 
     }
 
     @Override
     public void pause() {
-
+        System.out.println("pause");
     }
 
     @Override
     public void resume() {
-
+        System.out.println("resume");
     }
 
     @Override
     public void hide() {
+        System.out.println("hide");
 
+        for(Actor actor : stage.getActors())
+        {
+            if (actor.getName() != null && actor.getName().equals("btnInventory")) {
+                Gdx.app.log("Remove", "Success");
+                actor.remove();
+            }
+        }
     }
 
     @Override
@@ -181,7 +248,7 @@ public class InitGameScreen implements Screen {
 
     public void connectSocket() {
         try {
-            socket = IO.socket("http://usaeng-crossing.kro.kr/");
+            socket = IO.socket("http://localhost:8080");
             socket.connect();
         }
         catch (Exception e) {

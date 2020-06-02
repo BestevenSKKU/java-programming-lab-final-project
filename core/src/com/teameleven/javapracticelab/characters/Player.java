@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.teameleven.javapracticelab.screens.InitGameScreen;
+import com.teameleven.javapracticelab.screens.InventoryScreen;
 import com.teameleven.javapracticelab.texture.Textures;
 import com.teameleven.javapracticelab.utils.Direction;
 import com.teameleven.javapracticelab.utils.Gender;
@@ -112,12 +114,13 @@ public class Player extends Sprite {
  
 
         if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-         	elapsedTime += Gdx.graphics.getDeltaTime();
-         	previousDirection = Direction.RIGHT;
-            this.setRegion(animation[previousDirection.ordinal()].getKeyFrame(elapsedTime,true));
-            positionX +=speed;
+            elapsedTime += Gdx.graphics.getDeltaTime();
+            previousDirection = Direction.RIGHT;
+            this.setRegion(animation[previousDirection.ordinal()].getKeyFrame(elapsedTime, true));
+            positionX += speed;
             directionChanged = true;
         }
+
         
         if (directionChanged == false) {
             if (previousDirection == Direction.LEFT) {

@@ -20,10 +20,12 @@ public class InventoryScreen implements Screen {
 	
     final UsasengCrossing game;
     private Stage stage;
+    InitGameScreen initGameScreen;
 
-    public InventoryScreen(final UsasengCrossing game, final InitGameScreen initscreen) {
+    public InventoryScreen(final UsasengCrossing game, final InitGameScreen initGameScreen) {
     	
     this.game = game;
+    this.initGameScreen = initGameScreen;
 
     stage = new Stage(new ScreenViewport());
     Gdx.input.setInputProcessor(stage);
@@ -39,7 +41,7 @@ public class InventoryScreen implements Screen {
 		@Override
         public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 			//back to initscreen
-        	game.setScreen(initscreen);
+        	game.setScreen(initGameScreen);
         }
         
         @Override
@@ -65,6 +67,13 @@ public class InventoryScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+
+        /*
+        if(Gdx.input.isKeyPressed(Input.Keys.E)) {
+            game.setScreen(this.initGameScreen);
+        }
+
+         */
     }
 
     @Override
