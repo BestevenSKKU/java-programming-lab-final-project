@@ -43,7 +43,7 @@ public class InventoryScreen implements Screen {
     
     texture = new Texture(Gdx.files.internal("inventory_img.png"));
     
-    title = new Label("아이템 목록", Skins.korean, "black");
+    title = new Label("아이템 목록   (나가기 Esc)", Skins.korean, "black");
     title.setSize(Gdx.graphics.getWidth(),row_height);
     title.setPosition(0,600);
     title.setAlignment(Align.center);

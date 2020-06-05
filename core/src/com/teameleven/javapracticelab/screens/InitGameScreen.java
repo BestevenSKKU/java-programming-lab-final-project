@@ -59,14 +59,14 @@ public class InitGameScreen implements Screen {
         
         batch = new SpriteBatch();
 
-        lblPlayer = new Label(playerName, Skins.korean, "black");
+        lblPlayer = new Label("플레이어: "+playerName, Skins.korean, "black");
         lblPlayer.setSize(Gdx.graphics.getWidth(),row_height);
-        lblPlayer.setPosition(+10,650);
+        lblPlayer.setPosition(+10,700);
         lblPlayer.setAlignment(Align.left);
         stage.addActor(lblPlayer);
-        lblIsland = new Label(islandName, Skins.korean, "black");
+        lblIsland = new Label("섬: "+islandName, Skins.korean, "black");
         lblIsland.setSize(Gdx.graphics.getWidth(),row_height);
-        lblIsland.setPosition(+10,700);
+        lblIsland.setPosition(+10,650);
         lblIsland.setAlignment(Align.left);
         stage.addActor(lblIsland);
 
@@ -97,9 +97,6 @@ public class InitGameScreen implements Screen {
         updateServer(delta);
         Gdx.gl.glClearColor(1,1,1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        stage.act();
-        stage.draw();
-
 
         batch.begin();
         villager.action(batch);
@@ -108,6 +105,9 @@ public class InitGameScreen implements Screen {
         }
         player.action(batch);
         batch.end();
+        
+        stage.act();
+        stage.draw();
         
         camera1.position.set(player.getX()+100,player.getY()+100,0);
         camera1.update();
