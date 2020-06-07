@@ -1,14 +1,14 @@
 package com.teameleven.javapracticelab.items;
 
-public class Apple extends Fruit{
+public class Banana extends Fruit{
 	
 	static int count = 0;
 	static int cost;
 	static int calorie;
-	static String en_name = "Apple";
-	static String ko_name = "사과";
+	static String en_name = "Banana";
+	static String ko_name = "바나나";
 
-	public Apple(){
+	public Banana(){
 		//empty
 	}
 	
