@@ -1,14 +1,13 @@
 package com.teameleven.javapracticelab.items;
 
-public class Cod extends Fish{
+public class Softwood extends Wood{
 	
 	static int count = 0;
 	static int cost;
-	static int calorie;
-	static String en_name = "Cod";
-	static String ko_name = "대구";
+	static String en_name = "Softwood";
+	static String ko_name = "부드러운 목재";
 
-	public Cod(){
+	public Softwood(){
 		//empty
 	}
 	
@@ -17,9 +16,6 @@ public class Cod extends Fish{
 	}
 	static int getCost() {
 		return cost;
-	}
-	static int getCalorie() {
-		return calorie;
 	}
 	static String getEn_name() {
 		return en_name;
@@ -35,10 +31,6 @@ public class Cod extends Fish{
 	static void setCost(int val) {
 		cost = val;
 	}
-	static void setCalorie(int val) {
-		calorie = val;
-	}
-	
 	
 	
 	static void increaseCount(int val) {

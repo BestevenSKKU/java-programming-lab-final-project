@@ -1,6 +1,6 @@
 package com.teameleven.javapracticelab.items;
 
-public class Tuna extends Fruit{
+public class Tuna extends Fish{
 	
 	static int count = 0;
 	static int cost;

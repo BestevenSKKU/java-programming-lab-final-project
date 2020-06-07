@@ -1,6 +1,6 @@
 package com.teameleven.javapracticelab.items;
 
-public class Salmon extends Fruit{
+public class Salmon extends Fish{
 	
 	static int count = 0;
 	static int cost;
