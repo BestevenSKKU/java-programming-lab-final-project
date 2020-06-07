@@ -1,13 +1,13 @@
 package com.teameleven.javapracticelab.items;
 
-public class Softwood extends Wood{
+public class HardWood extends Wood{
 	
 	static int count = 0;
 	static int cost;
-	static String en_name = "Softwood";
-	static String ko_name = "부드러운 목재";
+	static String en_name = "HardWood";
+	static String ko_name = "단단한 목재";
 
-	public Softwood(){
+	public HardWood(){
 		//empty
 	}
 	

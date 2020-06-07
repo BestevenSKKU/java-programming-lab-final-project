@@ -1,13 +1,13 @@
 package com.teameleven.javapracticelab.items;
 
-public class Fishingrod extends Tool{
+public class FishingRod extends Tool{
 	
 	static int count = 0;
 	static int cost;
-	static String en_name = "Fishingrod";
+	static String en_name = "FishingRod";
 	static String ko_name = "낚싯대";
 
-	public Fishingrod(){
+	public FishingRod(){
 		//empty
 	}
 	
