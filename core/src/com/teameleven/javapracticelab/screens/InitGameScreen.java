@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
 import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.characters.Villager;
+import com.teameleven.javapracticelab.items.Apple;
+import com.teameleven.javapracticelab.items.SoftWood;
 import com.teameleven.javapracticelab.utils.Gender;
 import com.teameleven.javapracticelab.utils.Skins;
 import io.socket.client.IO;
@@ -85,6 +87,13 @@ public class InitGameScreen implements Screen {
 
         this.connectSocket();
         this.configSocketEvents();
+
+
+        // item test
+        player.getInventory().addItem(new SoftWood());
+        player.getInventory().addItem(new SoftWood());
+        player.getInventory().addItem(new SoftWood());
+        player.getInventory().addItem(new Apple());
     }
 
     @Override
@@ -116,10 +125,10 @@ public class InitGameScreen implements Screen {
         if (inventoryOpenFlg[0]) {
             Gdx.app.log("ButtenEvent", "Flag catch");
             inventoryOpenFlg[0] = false;
-            game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen() ));
+            game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
         }
         if(Gdx.input.isKeyPressed(Input.Keys.E)) {
-            game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen() ));
+            game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
         }
         
     }

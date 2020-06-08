@@ -17,11 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
+import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.utils.Skins;
 
 public class InventoryScreen implements Screen {
 	
     final UsasengCrossing game;
+    final Player player;
     private Stage stage;
     
     InitGameScreen initGameScreen;
@@ -31,50 +33,51 @@ public class InventoryScreen implements Screen {
     private Label title;
     int row_height = Gdx.graphics.getWidth() / 10;
     
-    public InventoryScreen(final UsasengCrossing game, final InitGameScreen initGameScreen) {
+    public InventoryScreen(final UsasengCrossing game, final InitGameScreen initGameScreen, final Player player) {
     	
-    this.game = game;
-    this.initGameScreen = initGameScreen;
+        this.game = game;
+        this.initGameScreen = initGameScreen;
+        this.player = player;
 
-    stage = new Stage(new ScreenViewport());
-    Gdx.input.setInputProcessor(stage);
-    
-    batch = new SpriteBatch();
-    
-    texture = new Texture(Gdx.files.internal("inventory_img.png"));
-    
-    title = new Label("아이템 목록   (나가기 Esc)", Skins.korean, "black");
-    title.setSize(Gdx.graphics.getWidth(),row_height);
-    title.setPosition(0,600);
-    title.setAlignment(Align.center);
-    stage.addActor(title);
-    
-    int buttonWidth = Gdx.graphics.getWidth() / 5;
-    int buttonHeight = Gdx.graphics.getHeight() / 12;
-    
-    Button back = new TextButton("Back", Skins.craftacular);
-    back.setSize(buttonWidth,buttonHeight);
-    back.setPosition(600,0);
-    
-    back.addListener(new InputListener() {
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
 
-		@Override
-        public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-			//back to initscreen
-        	game.setScreen(initGameScreen);
-        }
-        
-        @Override
-        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-            return true;
-        }
+        batch = new SpriteBatch();
 
-           
-    });
-    //stage.addActor(back);
-    
-    
-    
+        texture = new Texture(Gdx.files.internal("inventory_img.png"));
+
+        title = new Label("아이템 목록   (나가기 Esc)", Skins.korean, "black");
+        title.setSize(Gdx.graphics.getWidth(),row_height);
+        title.setPosition(0,600);
+        title.setAlignment(Align.center);
+        stage.addActor(title);
+
+        int buttonWidth = Gdx.graphics.getWidth() / 5;
+        int buttonHeight = Gdx.graphics.getHeight() / 12;
+
+        Button back = new TextButton("Back", Skins.craftacular);
+        back.setSize(buttonWidth,buttonHeight);
+        back.setPosition(600,0);
+
+        back.addListener(new InputListener() {
+
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                //back to initscreen
+                game.setScreen(initGameScreen);
+            }
+    ;
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+
+        });
+        //stage.addActor(back);
+
+
+        this.player.getInventory().showInventory();
     }
     
     

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.teameleven.javapracticelab.items.Inventory;
 import com.teameleven.javapracticelab.screens.InitGameScreen;
 import com.teameleven.javapracticelab.screens.InventoryScreen;
 import com.teameleven.javapracticelab.texture.Textures;
@@ -20,6 +21,12 @@ import java.util.Map;
 public class Player extends Sprite {
     final private String name;
     final private Gender gender;
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    final private Inventory inventory = new Inventory();
 
     private int speed = 5;
 
