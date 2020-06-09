@@ -2,27 +2,25 @@ package com.teameleven.javapracticelab.screens;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
 import com.teameleven.javapracticelab.characters.Player;
-import com.teameleven.javapracticelab.items.Item;
 import com.teameleven.javapracticelab.utils.Skins;
 
 public class InventoryScreen implements Screen {
@@ -84,8 +82,6 @@ public class InventoryScreen implements Screen {
         });
         //stage.addActor(back);
 
-
-        this.player.getInventory().showInventory();
         setList();
     }
     
@@ -139,18 +135,15 @@ public class InventoryScreen implements Screen {
     }
     
     public void setList() throws IOException{
-    	int i=0;
-    	FileReader filereader = new FileReader("temp_itemlist.txt");
-        //입력 버퍼 생성
-        BufferedReader bufReader = new BufferedReader(filereader);
-        String line = "";
-        while((line = bufReader.readLine()) != null){
-        	itemList.add(new Label(line,Skins.korean, "black"));
-        	itemList.get(i).setAlignment(Align.left);
-        	itemList.get(i).setPosition(250,500+i*50);
-        	stage.addActor(itemList.get(i));
-        	i++;
-        	
+        HashMap<String, Integer> map = this.player.getInventory().getItemList();
+
+        int i = 0;
+        for(Map.Entry<String, Integer> elem : map.entrySet())  {
+            itemList.add(new Label(elem.getKey() + " : " + elem.getValue(),Skins.korean, "black"));
+            itemList.get(i).setAlignment(Align.left);
+            itemList.get(i).setPosition(250,500+i*50);
+            stage.addActor(itemList.get(i));
+            i++;
         }
 
     }

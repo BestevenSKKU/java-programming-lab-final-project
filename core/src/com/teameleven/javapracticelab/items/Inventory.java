@@ -12,9 +12,7 @@ public class Inventory {
         this.itemList.add(item);
     }
 
-    public void showInventory() throws IOException {
-    	File file = new File("temp_itemlist.txt");
-    	PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+    public HashMap<String, Integer> getItemList() {
     	
         HashMap<String, Integer> map = new HashMap<>();
 
@@ -27,11 +25,7 @@ public class Inventory {
             }
         }
 
-        for(Map.Entry<String, Integer> elem : map.entrySet())  {
-            System.out.println(elem.getKey() + ":  " + elem.getValue());
-            pw.println(elem.getKey() + ":  " + elem.getValue());
-        }
-        pw.close();
+        return map;
     }
 
 
