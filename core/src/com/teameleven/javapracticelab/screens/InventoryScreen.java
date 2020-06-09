@@ -1,10 +1,14 @@
 package com.teameleven.javapracticelab.screens;
 
+import java.io.*;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -18,6 +22,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
 import com.teameleven.javapracticelab.characters.Player;
+import com.teameleven.javapracticelab.items.Item;
 import com.teameleven.javapracticelab.utils.Skins;
 
 public class InventoryScreen implements Screen {
@@ -32,13 +37,16 @@ public class InventoryScreen implements Screen {
     private Texture texture;
     private Label title;
     int row_height = Gdx.graphics.getWidth() / 10;
+    ArrayList<Label> itemList = new ArrayList<Label>();
+
+
     
-    public InventoryScreen(final UsasengCrossing game, final InitGameScreen initGameScreen, final Player player) {
+    public InventoryScreen(final UsasengCrossing game, final InitGameScreen initGameScreen, final Player player) throws IOException {
     	
         this.game = game;
         this.initGameScreen = initGameScreen;
         this.player = player;
-
+        
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
@@ -78,8 +86,8 @@ public class InventoryScreen implements Screen {
 
 
         this.player.getInventory().showInventory();
+        setList();
     }
-    
     
     @Override
     public void show() {
@@ -95,7 +103,7 @@ public class InventoryScreen implements Screen {
         batch.begin();
         batch.draw(texture, 160, 30);
         batch.end();
-        
+
         stage.act();
         stage.draw();
 
@@ -127,6 +135,23 @@ public class InventoryScreen implements Screen {
 
     @Override
     public void dispose() {
+
+    }
+    
+    public void setList() throws IOException{
+    	int i=0;
+    	FileReader filereader = new FileReader("temp_itemlist.txt");
+        //입력 버퍼 생성
+        BufferedReader bufReader = new BufferedReader(filereader);
+        String line = "";
+        while((line = bufReader.readLine()) != null){
+        	itemList.add(new Label(line,Skins.korean, "black"));
+        	itemList.get(i).setAlignment(Align.left);
+        	itemList.get(i).setPosition(250,500+i*50);
+        	stage.addActor(itemList.get(i));
+        	i++;
+        	
+        }
 
     }
 }

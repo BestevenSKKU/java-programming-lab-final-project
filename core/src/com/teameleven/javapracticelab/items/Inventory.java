@@ -1,5 +1,6 @@
 package com.teameleven.javapracticelab.items;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,10 @@ public class Inventory {
         this.itemList.add(item);
     }
 
-    public void showInventory() {
+    public void showInventory() throws IOException {
+    	File file = new File("temp_itemlist.txt");
+    	PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+    	
         HashMap<String, Integer> map = new HashMap<>();
 
         for(Item item : itemList) {
@@ -24,8 +28,10 @@ public class Inventory {
         }
 
         for(Map.Entry<String, Integer> elem : map.entrySet())  {
-            System.out.println(elem.getKey() + ":" + elem.getValue());
+            System.out.println(elem.getKey() + ":  " + elem.getValue());
+            pw.println(elem.getKey() + ":  " + elem.getValue());
         }
+        pw.close();
     }
 
 

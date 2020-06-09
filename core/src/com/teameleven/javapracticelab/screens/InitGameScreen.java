@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -125,10 +126,19 @@ public class InitGameScreen implements Screen {
         if (inventoryOpenFlg[0]) {
             Gdx.app.log("ButtenEvent", "Flag catch");
             inventoryOpenFlg[0] = false;
-            game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
+            try {
+				game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
         }
         if(Gdx.input.isKeyPressed(Input.Keys.E)) {
-            game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
+            try {
+				game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         
     }
