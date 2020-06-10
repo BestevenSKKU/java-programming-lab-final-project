@@ -126,19 +126,12 @@ public class InitGameScreen implements Screen {
         if (inventoryOpenFlg[0]) {
             Gdx.app.log("ButtenEvent", "Flag catch");
             inventoryOpenFlg[0] = false;
-            try {
-				game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
+
         }
         if(Gdx.input.isKeyPressed(Input.Keys.E)) {
-            try {
 				game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
         }
         
     }
