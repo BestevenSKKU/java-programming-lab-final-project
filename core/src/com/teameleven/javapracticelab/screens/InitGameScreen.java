@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
+import com.teameleven.javapracticelab.BackgroundObjects.*;
 import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.characters.Villager;
 import com.teameleven.javapracticelab.items.Apple;
@@ -28,8 +29,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import com.badlogic.gdx.audio.Music;
 
 public class InitGameScreen implements Screen {
     final UsasengCrossing game;
@@ -39,12 +42,17 @@ public class InitGameScreen implements Screen {
     private Stage stage;
     private Label lblPlayer;
     private Label lblIsland;
-
+    private Music Bgm;
+    
     private Socket socket;
 
     Player player;
     HashMap<String, Player> friendlyPlayers;
-    Villager villager;
+    ArrayList<Villager> villagers = new ArrayList<Villager>();
+    ArrayList<House> houses = new ArrayList<House>();
+    ArrayList<Tree> trees = new ArrayList<Tree>();
+    ArrayList<Stone> stones = new ArrayList<Stone>();
+    
     SpriteBatch batch;
     OrthographicCamera camera1;
 
@@ -54,11 +62,18 @@ public class InitGameScreen implements Screen {
 
     public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender) {
         this.game = game;
-
+        
+        Bgm=Gdx.audio.newMusic(Gdx.files.internal("bgm.mp3"));
+        Bgm.setLooping(true);
+        Bgm.setVolume(0.1f);;
+        Bgm.play();
+        
         int row_height = Gdx.graphics.getWidth() / 12;
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        
+
         
         batch = new SpriteBatch();
 
@@ -80,7 +95,17 @@ public class InitGameScreen implements Screen {
 
         player = new Player(playerName, playerGender);
         friendlyPlayers = new HashMap<>();
-        villager = new Villager("잭슨", Gender.MALE);
+        
+        villagers.add(new Villager("jack", Gender.MALE));
+        
+        houses.add(new House(true,0,0));
+        houses.add(new House(false,700,700));
+        
+        trees.add(new Tree(300,200));
+        trees.add(new Tree(-300,-200));
+        
+        stones.add(new Stone(600,-100));
+        stones.add(new Stone(500,-300));
         
         camera1 = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         camera1.position.set(player.getX(),player.getY(),0);
@@ -109,11 +134,23 @@ public class InitGameScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        villager.action(batch);
+        for(House house : houses) {
+        	house.action(batch);
+        }
+        for(Tree tree : trees) {
+        	tree.action(batch);
+        }
+        for(Stone stone : stones) {
+        	stone.action(batch);
+        }
+        for(Villager villager : villagers) {
+        	villager.action(batch);
+        }
         for(Map.Entry<String, Player> entry : friendlyPlayers.entrySet()) {
             entry.getValue().draw(batch);
         }
         player.action(batch);
+
         batch.end();
         
         stage.act();
@@ -205,7 +242,7 @@ public class InitGameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+    	Bgm.dispose();
     }
 
     public void updateServer(float dt) {

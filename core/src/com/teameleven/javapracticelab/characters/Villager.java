@@ -1,5 +1,7 @@
 package com.teameleven.javapracticelab.characters;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,9 +15,11 @@ import com.teameleven.javapracticelab.utils.Gender;
 public class Villager extends Sprite {
     final private String name;
     final private Gender gender;
-
+    private float move_cycle = 0;
+    private int move_dir = 0;
     private int speed = 5;
-
+    Random random = new Random();
+    
     float positionX = 0.0f;
     float positionY = 0.0f;
 
@@ -30,7 +34,7 @@ public class Villager extends Sprite {
     float elapsedTime;
     
     public Villager(String name, Gender gender) {
-        super(new Texture("villager.png"));
+        super(new Texture("villager_" + name + ".png"));
         this.name = name;
         this.gender = gender;
     }
@@ -43,8 +47,31 @@ public class Villager extends Sprite {
     }
 
     public void spriteControl() {
+    	if (move_cycle > 100) {
+    		move_dir = 4;
+    	}
+    	if (move_cycle > 200) {
+    		move_cycle = 0;
+    		move_dir = random.nextInt(4);
+    	}
+    	
+    	
+    	if(move_dir == 0) {
+    		positionX = positionX - 3;
+    	}
+    	if(move_dir == 1) {
+    		positionX = positionX + 3;
+    	}
+    	if(move_dir == 2) {
+    		positionY = positionY - 3;
+    	}
+    	if(move_dir == 3) {
+    		positionY = positionY + 3;
+    	}
+    	if(move_dir == 4) {
 
- 
+    	}
+    	move_cycle++;
     }
     
     public float get_x() {
