@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -45,6 +46,13 @@ public class InitGameScreen implements Screen {
     private Label lblIsland;
     private Music Bgm;
     
+    //충돌 테스트
+    Space_icon space_icon;
+    Wait_icon wait_icon;
+    private boolean player_coli_tree = false;
+    private int cooltime = 100;
+    //
+    
     private Socket socket;
 
     Player player;
@@ -53,6 +61,7 @@ public class InitGameScreen implements Screen {
     ArrayList<House> houses = new ArrayList<House>();
     ArrayList<Tree> trees = new ArrayList<Tree>();
     ArrayList<Stone> stones = new ArrayList<Stone>();
+    
     
     SpriteBatch batch;
     OrthographicCamera camera1;
@@ -63,7 +72,10 @@ public class InitGameScreen implements Screen {
 
     public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender) {
         this.game = game;
-        
+        //충돌테스트
+        space_icon = new Space_icon();
+        wait_icon = new Wait_icon();
+        //
         Bgm=Gdx.audio.newMusic(Gdx.files.internal("bgm.mp3"));
         Bgm.setLooping(true);
         Bgm.setVolume(0.1f);;
@@ -154,11 +166,41 @@ public class InitGameScreen implements Screen {
             entry.getValue().draw(batch);
         }
         player.action(batch);
-
+        
+        //충돌테스트
+        if (player_coli_tree == true) {
+	        space_icon.setPosition(player.getX(), player.getY()+175);
+	        space_icon.action(batch);
+	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && cooltime > 100) {
+	        	//player.getInventory().addRadomItem(item);
+	        	player.getInventory().addItem(new Apple());
+	        	cooltime = 0;	
+	        }
+	        if (cooltime < 100) {
+	        	wait_icon.setPosition(player.getX()+10, player.getY()+220);
+		        wait_icon.action(batch);
+	
+	        	
+	        }
+        }
+        cooltime ++;
+        //충돌테스트
+        
         batch.end();
+        
         
         stage.act();
         stage.draw();
+        
+        //나무와 충돌
+        for(Tree tree : trees) {
+        	if(isCollition(tree, player)) {
+        		player_coli_tree = true;
+        		break;
+        	}
+        	else {player_coli_tree = false;}
+        }
+        //
         
         camera1.position.set(player.getX()+100,player.getY()+100,0);
         camera1.update();
@@ -376,4 +418,25 @@ public class InitGameScreen implements Screen {
             }
         });
     }
+    
+    public boolean isCollition(Sprite x, Sprite y) {
+        Boolean collide = false;
+        float x_Left = x.getX() + 20;
+        float x_Right = x.getX()+x.getWidth() - 20;
+        float x_Top = x.getY()+x.getHeight() - 20;
+        float x_Bottom = x.getY() + 20;
+        
+        float y_Left = y.getX() + 20;
+        float y_Right = y.getX()+y.getWidth() - 20;
+        float y_Top = y.getY()+y.getHeight() - 20;
+        float y_Bottom = y.getY() + 20;
+        
+
+        if (x_Left < y_Right && x_Right > y_Left &&
+              x_Top > y_Bottom && x_Bottom < y_Top) {
+            collide = true;
+        }
+        return collide;
+    }
+
 }
