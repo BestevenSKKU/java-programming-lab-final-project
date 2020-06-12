@@ -168,7 +168,9 @@ public class InitGameScreen implements Screen {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.E)) {
 				game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
-
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.C)) {
+        	game.setScreen(new CraftingScreen( game, (InitGameScreen)game.getScreen(), player ));
         }
         
     }
@@ -193,7 +195,6 @@ public class InitGameScreen implements Screen {
         inventory.setSize(buttonWidth,buttonHeight);
         inventory.setPosition(0,0);
         inventory.addListener(new InputListener() {
-
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 inventoryOpenFlg[0] = true;
