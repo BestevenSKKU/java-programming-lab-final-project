@@ -20,8 +20,8 @@ public class Villager extends Sprite {
     private int speed = 5;
     Random random = new Random();
     
-    float positionX = 0.0f;
-    float positionY = 0.0f;
+    float positionX = (float)random.nextInt(500);
+    float positionY = (float)random.nextInt(500);
 
     Texture img;
     TextureRegion[] animationFrames;
@@ -71,7 +71,7 @@ public class Villager extends Sprite {
     	if(move_dir == 4) {
 
     	}
-    	move_cycle++;
+    	move_cycle += random.nextInt(4);
     }
     
     public float get_x() {

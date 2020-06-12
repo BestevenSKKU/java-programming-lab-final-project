@@ -15,10 +15,11 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
 import com.teameleven.javapracticelab.BackgroundObjects.*;
+import com.teameleven.javapracticelab.BackgroundObjects.Stone;
 import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.characters.Villager;
-import com.teameleven.javapracticelab.items.Apple;
-import com.teameleven.javapracticelab.items.SoftWood;
+import com.teameleven.javapracticelab.items.*;
+
 import com.teameleven.javapracticelab.utils.Gender;
 import com.teameleven.javapracticelab.utils.Skins;
 import io.socket.client.IO;
@@ -96,7 +97,9 @@ public class InitGameScreen implements Screen {
         player = new Player(playerName, playerGender);
         friendlyPlayers = new HashMap<>();
         
-        villagers.add(new Villager("jack", Gender.MALE));
+        villagers.add(new Villager("잭슨", Gender.MALE));
+        villagers.add(new Villager("너굴", Gender.MALE));
+        villagers.add(new Villager("쭈니", Gender.MALE));
         
         houses.add(new House(true,0,0));
         houses.add(new House(false,700,700));
@@ -120,6 +123,7 @@ public class InitGameScreen implements Screen {
         player.getInventory().addItem(new SoftWood());
         player.getInventory().addItem(new SoftWood());
         player.getInventory().addItem(new Apple());
+        player.getInventory().addItem(new Peach());
     }
 
     @Override

@@ -73,7 +73,7 @@ public class CraftingScreen implements Screen {
                 //back to initscreen
                 game.setScreen(initGameScreen);
             }
-    ;
+    
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -141,12 +141,12 @@ public class CraftingScreen implements Screen {
         for(final Map.Entry<String, Integer> elem : map.entrySet())  {
             itemList.add(new Label(elem.getKey() + " : " + elem.getValue(),Skins.korean, "black"));
             itemList.get(i).setAlignment(Align.left);
-            itemList.get(i).setPosition(250,500+i*50);
+            itemList.get(i).setPosition(250,550-i*50);
             stage.addActor(itemList.get(i));
             
             buttonList.add(new TextButton("Use", Skins.craftacular));
             buttonList.get(i).setSize(100,40);
-            buttonList.get(i).setPosition(630,500+i*50);
+            buttonList.get(i).setPosition(630,550-i*50);
             buttonList.get(i).addListener(new InputListener() {
                 @Override
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {

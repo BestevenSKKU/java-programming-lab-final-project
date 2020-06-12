@@ -11,7 +11,17 @@ public class Inventory {
     public void addItem(Item item) {
         this.itemList.add(item);
     }
+    
+    public void delItem(Item item) {
+        for (Item item2 : this.itemList) {
+           if (item2.getName() == item.getName()) {
+              this.itemList.remove(item2);
+              break;
+           }
+        }
+    }
 
+    
     public HashMap<String, Integer> getItemList() {
     	
         HashMap<String, Integer> map = new HashMap<>();
