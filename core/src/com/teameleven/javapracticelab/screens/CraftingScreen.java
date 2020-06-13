@@ -108,9 +108,9 @@ public class CraftingScreen implements Screen {
             buttonList.get(0).addListener(new InputListener() {
                 @Override
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                	System.out.println(player.getInventory().ckItems(new SoftWood(), 2)+" "+player.getInventory().ckItems(new NormalStones(), 1));
-                		if(player.getInventory().ckItems(new SoftWood(), 2) && player.getInventory().ckItems(new NormalStones(), 1)) {
-                			player.getInventory().delItems(new SoftWood(), 2);
+                	System.out.println(player.getInventory().ckItems(new Branch(), 2)+" "+player.getInventory().ckItems(new NormalStones(), 1));
+                		if(player.getInventory().ckItems(new Branch(), 2) && player.getInventory().ckItems(new NormalStones(), 1)) {
+                			player.getInventory().delItems(new Branch(), 2);
                 			player.getInventory().delItems(new NormalStones(), 1);
                 			player.getInventory().addItem(new Axe());
                 			
@@ -147,11 +147,11 @@ public class CraftingScreen implements Screen {
             buttonList.get(1).addListener(new InputListener() {
                 @Override
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                	System.out.println(player.getInventory().ckItems(new SoftWood(), 3)+" "+player.getInventory().ckItems(new NormalStones(), 1));
+                	System.out.println(player.getInventory().ckItems(new Branch(), 3)+" "+player.getInventory().ckItems(new Vine(), 1));
 
-                	if(player.getInventory().ckItems(new SoftWood(), 3) && player.getInventory().ckItems(new NormalStones(), 1)) {
-                		player.getInventory().delItems(new SoftWood(), 3);
-                		player.getInventory().delItems(new NormalStones(), 1);
+                	if(player.getInventory().ckItems(new Branch(), 3) && player.getInventory().ckItems(new Vine(), 1)) {
+                		player.getInventory().delItems(new Branch(), 3);
+                		player.getInventory().delItems(new Vine(), 1);
             			player.getInventory().addItem(new FishingRod()); 
             			
             			

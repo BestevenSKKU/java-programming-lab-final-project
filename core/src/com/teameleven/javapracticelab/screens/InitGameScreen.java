@@ -152,6 +152,9 @@ public class InitGameScreen implements Screen {
         for(int i=1;i<=100;i++) {
         	player.getInventory().addItem(new SoftWood());
         	player.getInventory().addItem(new NormalStones());
+        	player.getInventory().addItem(new Branch());
+        	player.getInventory().addItem(new Vine());
+        	
         }
         // item test
 //        player.getInventory().addItem(new SoftWood());
