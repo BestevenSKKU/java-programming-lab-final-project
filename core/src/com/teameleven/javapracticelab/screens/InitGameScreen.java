@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
@@ -34,6 +35,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
+
 import com.badlogic.gdx.audio.Music;
 
 public class InitGameScreen implements Screen {
@@ -46,11 +50,17 @@ public class InitGameScreen implements Screen {
     private Label lblIsland;
     private Music Bgm;
     
-    //충돌 테스트
+    //상호작용 테스트
     Space_icon space_icon;
     Wait_icon wait_icon;
     private boolean player_coli_tree = false;
-    private int cooltime = 100;
+    private boolean try_tree = false;
+    private boolean player_coli_stone = false;
+    private boolean try_stone = false;
+    private boolean player_coli_pond = false;
+    private boolean try_pond = false;
+    private int cooltime_tree = 0;
+    private int cooltime_stone = 0;
     //
     
     private Socket socket;
@@ -72,10 +82,12 @@ public class InitGameScreen implements Screen {
 
     public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender) {
         this.game = game;
+        
         //충돌테스트
         space_icon = new Space_icon();
         wait_icon = new Wait_icon();
         //
+        
         Bgm=Gdx.audio.newMusic(Gdx.files.internal("bgm.mp3"));
         Bgm.setLooping(true);
         Bgm.setVolume(0.1f);;
@@ -131,11 +143,12 @@ public class InitGameScreen implements Screen {
 
 
         // item test
-        player.getInventory().addItem(new SoftWood());
-        player.getInventory().addItem(new SoftWood());
-        player.getInventory().addItem(new SoftWood());
-        player.getInventory().addItem(new Apple());
-        player.getInventory().addItem(new Peach());
+//        player.getInventory().addItem(new SoftWood());
+//        player.getInventory().addItem(new SoftWood());
+//        player.getInventory().addItem(new SoftWood());
+//        System.out.println("---" + player.getInventory().ckItems(new SoftWood(), 3));
+//        player.getInventory().addItem(new Apple());
+//        player.getInventory().addItem(new Peach());
     }
 
     @Override
@@ -167,24 +180,62 @@ public class InitGameScreen implements Screen {
         }
         player.action(batch);
         
-        //충돌테스트
+        //나무테스트
         if (player_coli_tree == true) {
+        	
 	        space_icon.setPosition(player.getX(), player.getY()+175);
 	        space_icon.action(batch);
-	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && cooltime > 100) {
-	        	//player.getInventory().addRadomItem(item);
-	        	player.getInventory().addItem(new Apple());
-	        	cooltime = 0;	
+	        
+	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+	        	try_tree = true;
 	        }
-	        if (cooltime < 100) {
+	        if (try_tree == true && cooltime_tree < 100 ) {
 	        	wait_icon.setPosition(player.getX()+10, player.getY()+220);
 		        wait_icon.action(batch);
-	
-	        	
+	        	cooltime_tree ++;
 	        }
+	        if (try_tree == true && cooltime_tree >= 100) {
+	        	player.getInventory().addRadomItem_fruit(player.getInventory().ckItems(new Axe(), 1));
+		        try_tree = false;
+		        cooltime_tree = 0;
+	        }
+	        
         }
-        cooltime ++;
-        //충돌테스트
+        else {
+        	cooltime_tree = 0;
+        	try_tree = false;
+        	}
+        
+        //돌 테스트
+        if (player_coli_stone == true) {
+        	
+	        space_icon.setPosition(player.getX(), player.getY()+175);
+	        space_icon.action(batch);
+	        
+	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+	        	try_stone = true;
+	        }
+	        if (try_stone == true && cooltime_stone < 100 ) {
+	        	wait_icon.setPosition(player.getX()+10, player.getY()+220);
+		        wait_icon.action(batch);
+	        	cooltime_stone ++;
+	        }
+	        if (try_stone == true && cooltime_stone >= 100) {
+	        	System.out.println("돌 얻음");
+	        	player.getInventory().addRadomItem_stone();
+		        try_stone = false;
+		        cooltime_stone = 0;
+	        }
+	        
+        }
+        else {
+        	cooltime_stone = 0;
+        	try_stone = false;
+        	}       
+        
+        //낚시 테스트
+        
+        
         
         batch.end();
         
@@ -201,6 +252,19 @@ public class InitGameScreen implements Screen {
         	else {player_coli_tree = false;}
         }
         //
+        
+        //돌과 충돌
+        for(Stone stone : stones) {
+        	if(isCollition(stone, player)) {
+        		player_coli_stone = true;
+        		break;
+        	}
+        	else {player_coli_stone = false;}
+        }
+        //
+        
+        
+        
         
         camera1.position.set(player.getX()+100,player.getY()+100,0);
         camera1.update();
