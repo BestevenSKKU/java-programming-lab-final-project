@@ -148,6 +148,11 @@ public class InitGameScreen implements Screen {
         this.configSocketEvents();
 
 
+        
+        for(int i=1;i<=100;i++) {
+        	player.getInventory().addItem(new SoftWood());
+        	player.getInventory().addItem(new NormalStones());
+        }
         // item test
 //        player.getInventory().addItem(new SoftWood());
 //        player.getInventory().addItem(new SoftWood());

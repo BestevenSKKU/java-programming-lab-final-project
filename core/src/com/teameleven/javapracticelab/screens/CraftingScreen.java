@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -26,9 +28,11 @@ import com.teameleven.javapracticelab.utils.Skins;
 
 public class CraftingScreen implements Screen {
 	
+	Item[] item=new Item[2];
     final UsasengCrossing game;
     final Player player;
     private Stage stage;
+    JOptionPane msg = new JOptionPane();
     
     InitGameScreen initGameScreen;
     SpriteBatch batch;
@@ -37,12 +41,17 @@ public class CraftingScreen implements Screen {
     private Label title;
     int row_height = Gdx.graphics.getWidth() / 10;
     ArrayList<Label> itemList = new ArrayList<Label>();
+
+    ArrayList<Label> craftList = new ArrayList<Label>();
     ArrayList<Button> buttonList = new ArrayList<Button>();
     
     
     public CraftingScreen(final UsasengCrossing game, final InitGameScreen initGameScreen, final Player player) {
-    	
-        this.game = game;
+    	Axe axe=new Axe();
+    	FishingRod frod=new FishingRod(); 
+    	item[0]=axe;
+    	item[1]=frod;
+    	this.game = game;
         this.initGameScreen = initGameScreen;
         this.player = player;
         
@@ -70,10 +79,11 @@ public class CraftingScreen implements Screen {
 
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	
                 //back to initscreen
                 game.setScreen(initGameScreen);
             }
-    
+    ;
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -83,7 +93,92 @@ public class CraftingScreen implements Screen {
         });
         //stage.addActor(back);
 
-        setList();
+        
+        
+        
+        
+    		craftList.add(new Label(item[0].getName()+": 나뭇가지 2개, 돌멩이 1개" ,Skins.korean, "black"));
+            craftList.get(0).setAlignment(Align.left);
+            craftList.get(0).setPosition(250,500+0*50);
+            stage.addActor(craftList.get(0));
+            
+            buttonList.add(new TextButton("make", Skins.craftacular));
+            buttonList.get(0).setSize(100,40);
+            buttonList.get(0).setPosition(630,500+0*50);
+            buttonList.get(0).addListener(new InputListener() {
+                @Override
+                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                	System.out.println(player.getInventory().ckItems(new SoftWood(), 2)+" "+player.getInventory().ckItems(new NormalStones(), 1));
+                		if(player.getInventory().ckItems(new SoftWood(), 2) && player.getInventory().ckItems(new NormalStones(), 1)) {
+                			player.getInventory().delItems(new SoftWood(), 2);
+                			player.getInventory().delItems(new NormalStones(), 1);
+                			player.getInventory().addItem(new Axe());
+                			
+                			msg.showMessageDialog(null, "제작 성공!");
+                			System.out.println("제작완료");
+                			//.성공 메세지
+                		}
+                		else {
+                			//실패 메세지
+                			msg.showMessageDialog(null, "재료가 부족합니다!");
+                			System.out.println("제작실패");
+                		}
+                	
+                	
+                }
+                @Override
+                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+            });
+            stage.addActor(buttonList.get(0));
+    	
+            
+
+    		craftList.add(new Label(item[1].getName()+": 나뭇가지 3개, 덩굴"
+    				+ " 1개" ,Skins.korean, "black"));
+            craftList.get(1).setAlignment(Align.left);
+            craftList.get(1).setPosition(250,500+1*50);
+            stage.addActor(craftList.get(1));
+            
+            buttonList.add(new TextButton("make", Skins.craftacular));
+            buttonList.get(1).setSize(100,40);
+            buttonList.get(1).setPosition(630,500+1*50);
+            buttonList.get(1).addListener(new InputListener() {
+                @Override
+                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                	System.out.println(player.getInventory().ckItems(new SoftWood(), 3)+" "+player.getInventory().ckItems(new NormalStones(), 1));
+
+                	if(player.getInventory().ckItems(new SoftWood(), 3) && player.getInventory().ckItems(new NormalStones(), 1)) {
+                		player.getInventory().delItems(new SoftWood(), 3);
+                		player.getInventory().delItems(new NormalStones(), 1);
+            			player.getInventory().addItem(new FishingRod()); 
+            			
+            			
+
+            			msg.showMessageDialog(null, "제작 성공!");
+            			System.out.println("제작완료");
+            			//.성공 메세지
+            		}
+            		else {
+
+            			msg.showMessageDialog(null, "재료가 부족합니다!");
+            			System.out.println("제작실패");
+            			//실패 메세지
+            		}
+                	
+      
+ 
+                	
+                }
+                @Override
+                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+            });
+            stage.addActor(buttonList.get(1));
+    	
+            
     }
     
     @Override
@@ -135,25 +230,24 @@ public class CraftingScreen implements Screen {
     }
     
     public void setList() {
-        HashMap<String, Integer> map = this.player.getInventory().getItemList();
-
-        int i = 0;
-        for(final Map.Entry<String, Integer> elem : map.entrySet())  {
-            itemList.add(new Label(elem.getKey() + " : " + elem.getValue(),Skins.korean, "black"));
-            itemList.get(i).setAlignment(Align.left);
-            itemList.get(i).setPosition(250,550-i*50);
-            stage.addActor(itemList.get(i));
+    	int i;
+    	for( i=0;i<=1;i++) {
+    		craftList.add(new Label(item[i].getName()+": 나뭇가지 3개, 덩굴 1개" ,Skins.korean, "black"));
+            craftList.get(i).setAlignment(Align.left);
+            craftList.get(i).setPosition(250,500+i*50);
+            stage.addActor(craftList.get(i));
             
-            buttonList.add(new TextButton("Use", Skins.craftacular));
+            buttonList.add(new TextButton("make", Skins.craftacular));
             buttonList.get(i).setSize(100,40);
-            buttonList.get(i).setPosition(630,550-i*50);
+            buttonList.get(i).setPosition(630,500+i*50);
             buttonList.get(i).addListener(new InputListener() {
                 @Override
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                	System.out.println("use " + elem.getKey());
-                	//기능 구현 필요 (단순히 String이 아니라 실제 클래스로 건드려야지 기능 구현이 가능할듯?) 
-                	//먹는 아이템일 경우 사용시 포만감 획득, item 어레이에서 1개 제거, 0개 이하에서 사용할시 오류문구
-                	//업데이트 함수를 새로 만들어서 사용할시 현재 표기되는 수를 줄여야함
+                	
+                	
+                	
+                	
+                	
                 }
                 @Override
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -161,8 +255,7 @@ public class CraftingScreen implements Screen {
                 }
             });
             stage.addActor(buttonList.get(i));
-            i++;
-        }
-
+    	}
+    
     }
 }
