@@ -64,6 +64,7 @@ public class InitGameScreen implements Screen {
     private boolean try_house = false;
     private int cooltime_tree = 0;
     private int cooltime_stone = 0;
+    private int cooltime_pond = 0;
     ArrayList<Boolean> villagers_coli_move = new ArrayList<Boolean>();
     //
     
@@ -75,6 +76,7 @@ public class InitGameScreen implements Screen {
     ArrayList<House> houses = new ArrayList<House>();
     ArrayList<Tree> trees = new ArrayList<Tree>();
     ArrayList<Stone> stones = new ArrayList<Stone>();
+    ArrayList<Pond> ponds = new ArrayList<Pond>();
     
     
     SpriteBatch batch;
@@ -134,6 +136,8 @@ public class InitGameScreen implements Screen {
         houses.add(new House(true,0,200));
         houses.add(new House(false,700,700));
         
+        ponds.add(new Pond(-1000, 100));
+        
         trees.add(new Tree(300,200));
         trees.add(new Tree(-300,-200));
         
@@ -187,6 +191,9 @@ public class InitGameScreen implements Screen {
         }
         for(Stone stone : stones) {
         	stone.action(batch);
+        }
+        for(Pond pond : ponds) {
+        	pond.action(batch);
         }
         
         int vil_cnt = 0;
@@ -269,6 +276,13 @@ public class InitGameScreen implements Screen {
         	}
         }
         
+        for(Pond pond : ponds) {
+        	if(isCollition_for_move(pond, villager)) {
+        		villagers_coli_move.set(vil_cnt, true);
+        		break;
+        	}
+        }
+        
     }
     
     public void player_coli_work() {
@@ -322,9 +336,30 @@ public class InitGameScreen implements Screen {
         else {
         	cooltime_stone = 0;
         	try_stone = false;
-        	}       
+        }       
         
         //낚시 테스트
+        if (player_coli_pond == true) {
+        	
+	        space_icon.setPosition(player.getX(), player.getY()+175);
+	        space_icon.action(batch);
+	        
+	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+	        	try_pond = true;
+	        }
+	        if (try_pond == true && cooltime_pond < 100 ) {
+	        	wait_icon.setPosition(player.getX()+10, player.getY()+220);
+		        wait_icon.action(batch);
+	        	cooltime_pond ++;
+	        }
+	        if (try_pond == true && cooltime_pond >= 100) {
+	        	player.getInventory().addRadomItem_pond(player.getInventory().ckItems(new FishingRod(), 1));
+		        try_pond = false;
+		        cooltime_pond = 0;
+	        }
+	        
+        }
+        
     }
     
     public void player_coli_move_ck() {
@@ -347,6 +382,13 @@ public class InitGameScreen implements Screen {
 
         for(House house : houses) {
         	if(isCollition_for_move(house, player)) {
+        		player_coli_move = true;
+        		break;
+        	}
+        }
+        
+        for(Pond pond : ponds) {
+        	if(isCollition_for_move(pond, player)) {
         		player_coli_move = true;
         		break;
         	}
@@ -376,6 +418,15 @@ public class InitGameScreen implements Screen {
         		break;
         	}
         	else {player_coli_house = false;}
+        }
+        
+        //연못과 충돌
+        for(Pond pond : ponds) {
+        	if(isCollition(pond, player)) {
+        		player_coli_pond = true;
+        		break;
+        	}
+        	else {player_coli_pond = false;}
         }
     }
 

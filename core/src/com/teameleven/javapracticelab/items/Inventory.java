@@ -12,13 +12,14 @@ import java.util.Random;
 
 public class Inventory {
     ArrayList<Item> itemList = new ArrayList<>();
-    Dialog get_fruits;
     JOptionPane get_fruits_msg = new JOptionPane();
-    Dialog get_stones;
     JOptionPane get_stones_msg = new JOptionPane();
+    JOptionPane get_fishs_msg = new JOptionPane();
+    
     Random random = new Random();
     int fruit_choose;
     int stone_choose;
+    int fish_choose;
     
     
     public void addItem(Item item) {
@@ -81,96 +82,133 @@ public class Inventory {
         return map;
     }
     
-public void addRadomItem_fruit(boolean have_axe) {
+	public void addRadomItem_pond(boolean have_FishingRod) {
     	
-    	if (have_axe == false) {
-	    	fruit_choose = random.nextInt(9);
-	    	
-	    	if (fruit_choose == 0) {
-	    		get_fruits_msg.showMessageDialog(null, "사과 획득!");
-	    		this.addItem(new Apple());
-	    	}
-	    	
-	    	if (fruit_choose == 1) {
-	    		get_fruits_msg.showMessageDialog(null, "바나나 획득!");
-	    		this.addItem(new Banana());
-	    	}
-	    	
-	    	if (fruit_choose == 2) {
-	    		get_fruits_msg.showMessageDialog(null, "망고 획득!");
-	    		this.addItem(new Mango());
-	    	}
-	    	
-	    	if (fruit_choose == 3) {
-	    		get_fruits_msg.showMessageDialog(null, "복숭아 획득!");
-	    		this.addItem(new Peach());
-	    	}
-	    	
-	    	if (fruit_choose == 4 || fruit_choose == 5) {
-	    		get_fruits_msg.showMessageDialog(null, "나뭇가지 획득!");
-	    		this.addItem(new Branch());
-	    	}
-	    	
-	    	if (fruit_choose == 6 || fruit_choose == 7) {
-	    		get_fruits_msg.showMessageDialog(null, "덩굴 획득!");
-	    		this.addItem(new Vine());
-	    	}
-	    	
-	    	if (fruit_choose > 7) {
-	    		get_fruits_msg.showMessageDialog(null, "아무것도 없었다...");
-	    	}
-    	
+    	if (have_FishingRod == false) {
+    		get_fishs_msg.showMessageDialog(null, "아무것도 없었다.... 낚싯대가 있으면 어떨까?");
     	}
-    	if (have_axe == true) {
-	    	fruit_choose = random.nextInt(12);
+    	
+    	if (have_FishingRod == true) {
+    		fish_choose = random.nextInt(5);
 	    	
-	    	if (fruit_choose == 0) {
-	    		get_fruits_msg.showMessageDialog(null, "사과 획득!");
-	    		this.addItem(new Apple());
+	    	if (fish_choose == 0) {
+	    		get_fishs_msg.showMessageDialog(null, "대구 획득!");
+	    		this.addItem(new Cod());
 	    	}
 	    	
-	    	if (fruit_choose == 1) {
-	    		get_fruits_msg.showMessageDialog(null, "바나나 획득!");
-	    		this.addItem(new Banana());
+	    	if (fish_choose == 1) {
+	    		get_fishs_msg.showMessageDialog(null, "참치 획득!");
+	    		this.addItem(new Tuna());
 	    	}
 	    	
-	    	if (fruit_choose == 2) {
-	    		get_fruits_msg.showMessageDialog(null, "망고 획득!");
-	    		this.addItem(new Mango());
+	    	if (fish_choose == 2) {
+	    		get_fishs_msg.showMessageDialog(null, "문어 획득!");
+	    		this.addItem(new Octopus());
 	    	}
 	    	
-	    	if (fruit_choose == 3) {
-	    		get_fruits_msg.showMessageDialog(null, "복숭아 획득!");
-	    		this.addItem(new Peach());
+	    	if (fish_choose == 3) {
+	    		get_fishs_msg.showMessageDialog(null, "연어 획득!");
+	    		this.addItem(new Salmon());
 	    	}
 	    	
-	    	if (fruit_choose == 4) {
-	    		get_fruits_msg.showMessageDialog(null, "나뭇가지 획득!");
-	    		this.addItem(new Branch());
-	    	}
-	    	
-	    	if (fruit_choose == 5 || fruit_choose == 6) {
-	    		get_fruits_msg.showMessageDialog(null, "부드러운 목재 획득!");
-	    		this.addItem(new SoftWood());
-	    	}
-	    	
-	    	if (fruit_choose == 7 || fruit_choose == 8) {
-	    		get_fruits_msg.showMessageDialog(null, "단단한 목재 획득!");
-	    		this.addItem(new HardWood());
-	    	}
-	    	
-	    	if (fruit_choose == 9 || fruit_choose == 10) {
-	    		get_fruits_msg.showMessageDialog(null, "덩굴 획득!");
-	    		this.addItem(new Vine());
-	    	}
-	    	
-	    	if (fruit_choose >10) {
-	    		get_fruits_msg.showMessageDialog(null, "아무것도 없었다...");
+	    	if (fish_choose >3) {
+	    		get_fishs_msg.showMessageDialog(null, "아무것도 없었다...");
 	    	}
 	    	
     	}
     	
     }
+    
+	public void addRadomItem_fruit(boolean have_axe) {
+	    	
+	    	if (have_axe == false) {
+		    	fruit_choose = random.nextInt(9);
+		    	
+		    	if (fruit_choose == 0) {
+		    		get_fruits_msg.showMessageDialog(null, "사과 획득!");
+		    		this.addItem(new Apple());
+		    	}
+		    	
+		    	if (fruit_choose == 1) {
+		    		get_fruits_msg.showMessageDialog(null, "바나나 획득!");
+		    		this.addItem(new Banana());
+		    	}
+		    	
+		    	if (fruit_choose == 2) {
+		    		get_fruits_msg.showMessageDialog(null, "망고 획득!");
+		    		this.addItem(new Mango());
+		    	}
+		    	
+		    	if (fruit_choose == 3) {
+		    		get_fruits_msg.showMessageDialog(null, "복숭아 획득!");
+		    		this.addItem(new Peach());
+		    	}
+		    	
+		    	if (fruit_choose == 4 || fruit_choose == 5) {
+		    		get_fruits_msg.showMessageDialog(null, "나뭇가지 획득!");
+		    		this.addItem(new Branch());
+		    	}
+		    	
+		    	if (fruit_choose == 6 || fruit_choose == 7) {
+		    		get_fruits_msg.showMessageDialog(null, "덩굴 획득!");
+		    		this.addItem(new Vine());
+		    	}
+		    	
+		    	if (fruit_choose > 7) {
+		    		get_fruits_msg.showMessageDialog(null, "아무것도 없었다.... 도끼가 있으면 어떨까?");
+		    	}
+	    	
+	    	}
+	    	if (have_axe == true) {
+		    	fruit_choose = random.nextInt(12);
+		    	
+		    	if (fruit_choose == 0) {
+		    		get_fruits_msg.showMessageDialog(null, "사과 획득!");
+		    		this.addItem(new Apple());
+		    	}
+		    	
+		    	if (fruit_choose == 1) {
+		    		get_fruits_msg.showMessageDialog(null, "바나나 획득!");
+		    		this.addItem(new Banana());
+		    	}
+		    	
+		    	if (fruit_choose == 2) {
+		    		get_fruits_msg.showMessageDialog(null, "망고 획득!");
+		    		this.addItem(new Mango());
+		    	}
+		    	
+		    	if (fruit_choose == 3) {
+		    		get_fruits_msg.showMessageDialog(null, "복숭아 획득!");
+		    		this.addItem(new Peach());
+		    	}
+		    	
+		    	if (fruit_choose == 4) {
+		    		get_fruits_msg.showMessageDialog(null, "나뭇가지 획득!");
+		    		this.addItem(new Branch());
+		    	}
+		    	
+		    	if (fruit_choose == 5 || fruit_choose == 6) {
+		    		get_fruits_msg.showMessageDialog(null, "부드러운 목재 획득!");
+		    		this.addItem(new SoftWood());
+		    	}
+		    	
+		    	if (fruit_choose == 7 || fruit_choose == 8) {
+		    		get_fruits_msg.showMessageDialog(null, "단단한 목재 획득!");
+		    		this.addItem(new HardWood());
+		    	}
+		    	
+		    	if (fruit_choose == 9 || fruit_choose == 10) {
+		    		get_fruits_msg.showMessageDialog(null, "덩굴 획득!");
+		    		this.addItem(new Vine());
+		    	}
+		    	
+		    	if (fruit_choose >10) {
+		    		get_fruits_msg.showMessageDialog(null, "아무것도 없었다...");
+		    	}
+		    	
+	    	}
+	    	
+	    }
     
     public void addRadomItem_stone() {
     	stone_choose = random.nextInt(2);
