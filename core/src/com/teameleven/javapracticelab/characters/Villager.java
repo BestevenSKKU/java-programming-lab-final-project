@@ -21,8 +21,11 @@ public class Villager extends Sprite {
     Random random = new Random();
     
     float positionX = (float)random.nextInt(500);
-    float positionY = (float)random.nextInt(500);
-
+    float positionY = (float)(1)*random.nextInt(200)-100;
+    
+    float tmp_positionX = 0.0f;
+    float tmp_positionY = 0.0f;
+    
     Texture img;
     TextureRegion[] animationFrames;
     Animation<TextureRegion> animation;
@@ -46,7 +49,17 @@ public class Villager extends Sprite {
         this.draw(batch);
     }
 
+    public void back_pos() {
+    	positionX = tmp_positionX;
+    	positionY = tmp_positionY;
+    }
+
+    
     public void spriteControl() {
+    	
+    	tmp_positionX = positionX;
+    	tmp_positionY = positionY;
+    	
     	if (move_cycle > 100) {
     		move_dir = 4;
     	}

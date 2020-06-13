@@ -53,14 +53,18 @@ public class InitGameScreen implements Screen {
     //상호작용 테스트
     Space_icon space_icon;
     Wait_icon wait_icon;
+    private boolean player_coli_move = false;
     private boolean player_coli_tree = false;
     private boolean try_tree = false;
     private boolean player_coli_stone = false;
     private boolean try_stone = false;
     private boolean player_coli_pond = false;
     private boolean try_pond = false;
+    private boolean player_coli_house = false;
+    private boolean try_house = false;
     private int cooltime_tree = 0;
     private int cooltime_stone = 0;
+    ArrayList<Boolean> villagers_coli_move = new ArrayList<Boolean>();
     //
     
     private Socket socket;
@@ -99,7 +103,6 @@ public class InitGameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         
 
-        
         batch = new SpriteBatch();
 
         lblPlayer = new Label("플레이어: "+playerName, Skins.korean, "black");
@@ -124,8 +127,11 @@ public class InitGameScreen implements Screen {
         villagers.add(new Villager("잭슨", Gender.MALE));
         villagers.add(new Villager("너굴", Gender.MALE));
         villagers.add(new Villager("쭈니", Gender.MALE));
+        villagers_coli_move.add(false);
+        villagers_coli_move.add(false);
+        villagers_coli_move.add(false);
         
-        houses.add(new House(true,0,0));
+        houses.add(new House(true,0,200));
         houses.add(new House(false,700,700));
         
         trees.add(new Tree(300,200));
@@ -146,7 +152,7 @@ public class InitGameScreen implements Screen {
 //        player.getInventory().addItem(new SoftWood());
 //        player.getInventory().addItem(new SoftWood());
 //        player.getInventory().addItem(new SoftWood());
-//        System.out.println("---" + player.getInventory().ckItems(new SoftWood(), 3));
+//        player.getInventory().ckItems(new SoftWood(), 3);
 //        player.getInventory().addItem(new Apple());
 //        player.getInventory().addItem(new Peach());
     }
@@ -163,6 +169,8 @@ public class InitGameScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
+        
+        
         for(House house : houses) {
         	house.action(batch);
         }
@@ -172,15 +180,91 @@ public class InitGameScreen implements Screen {
         for(Stone stone : stones) {
         	stone.action(batch);
         }
+        
+        int vil_cnt = 0;
+        
         for(Villager villager : villagers) {
+        	
+        	villagers_coli_move.set(vil_cnt, false);
         	villager.action(batch);
+        	villager_coli_move_ck(vil_cnt, villager);
+        	
+        	if (villagers_coli_move.get(vil_cnt)) {
+        		villager.back_pos();
+            }
+        	vil_cnt++;
         }
         for(Map.Entry<String, Player> entry : friendlyPlayers.entrySet()) {
             entry.getValue().draw(batch);
         }
+        
+        
         player.action(batch);
         
-        //나무테스트
+        
+        //전체 움직임 충돌 
+        player_coli_move_ck();
+        
+        if (player_coli_move) {
+        	player.back_pos();
+        }
+        player_coli_work();
+       
+        batch.end();
+        
+        
+        stage.act();
+        stage.draw();
+        
+
+        
+        camera1.position.set(player.getX()+100,player.getY()+100,0);
+        camera1.update();
+        batch.setProjectionMatrix(camera1.combined);
+
+        if (inventoryOpenFlg[0]) {
+            Gdx.app.log("ButtenEvent", "Flag catch");
+            inventoryOpenFlg[0] = false;
+			game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
+
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.E)) {
+				game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.C)) {
+        	game.setScreen(new CraftingScreen( game, (InitGameScreen)game.getScreen(), player ));
+        }
+        
+    }
+    
+    public void villager_coli_move_ck(int vil_cnt, Villager villager) {
+    	
+    	
+    	for(Tree tree : trees) {
+        	if(isCollition_for_move(tree, villager)) {
+        		villagers_coli_move.set(vil_cnt, true);
+        		break;
+        	}
+        }
+        
+        for(Stone stone : stones) {
+        	if(isCollition_for_move(stone, villager)) {
+        		villagers_coli_move.set(vil_cnt, true);
+        		break;
+        	}
+        }
+
+        for(House house : houses) {
+        	if(isCollition_for_move(house, villager)) {
+        		villagers_coli_move.set(vil_cnt, true);
+        		break;
+        	}
+        }
+        
+    }
+    
+    public void player_coli_work() {
+    	 //나무테스트
         if (player_coli_tree == true) {
         	
 	        space_icon.setPosition(player.getX(), player.getY()+175);
@@ -221,7 +305,6 @@ public class InitGameScreen implements Screen {
 	        	cooltime_stone ++;
 	        }
 	        if (try_stone == true && cooltime_stone >= 100) {
-	        	System.out.println("돌 얻음");
 	        	player.getInventory().addRadomItem_stone();
 		        try_stone = false;
 		        cooltime_stone = 0;
@@ -234,14 +317,32 @@ public class InitGameScreen implements Screen {
         	}       
         
         //낚시 테스트
+    }
+    
+    public void player_coli_move_ck() {
+    	
+    	player_coli_move = false;
+    	
+    	for(Tree tree : trees) {
+        	if(isCollition_for_move(tree, player)) {
+        		player_coli_move = true;
+        		break;
+        	}
+        }
         
-        
-        
-        batch.end();
-        
-        
-        stage.act();
-        stage.draw();
+        for(Stone stone : stones) {
+        	if(isCollition_for_move(stone, player)) {
+        		player_coli_move = true;
+        		break;
+        	}
+        }
+
+        for(House house : houses) {
+        	if(isCollition_for_move(house, player)) {
+        		player_coli_move = true;
+        		break;
+        	}
+        }
         
         //나무와 충돌
         for(Tree tree : trees) {
@@ -251,7 +352,6 @@ public class InitGameScreen implements Screen {
         	}
         	else {player_coli_tree = false;}
         }
-        //
         
         //돌과 충돌
         for(Stone stone : stones) {
@@ -261,28 +361,14 @@ public class InitGameScreen implements Screen {
         	}
         	else {player_coli_stone = false;}
         }
-        //
-        
-        
-        
-        
-        camera1.position.set(player.getX()+100,player.getY()+100,0);
-        camera1.update();
-        batch.setProjectionMatrix(camera1.combined);
-
-        if (inventoryOpenFlg[0]) {
-            Gdx.app.log("ButtenEvent", "Flag catch");
-            inventoryOpenFlg[0] = false;
-			game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
-
+        //집과 충돌
+        for(House house : houses) {
+        	if(isCollition(house, player)) {
+        		player_coli_house = true;
+        		break;
+        	}
+        	else {player_coli_house = false;}
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.E)) {
-				game.setScreen(new InventoryScreen( game, (InitGameScreen)game.getScreen(), player ));
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.C)) {
-        	game.setScreen(new CraftingScreen( game, (InitGameScreen)game.getScreen(), player ));
-        }
-        
     }
 
     @Override
@@ -502,5 +588,24 @@ public class InitGameScreen implements Screen {
         }
         return collide;
     }
+    
+    public boolean isCollition_for_move(Sprite x, Sprite y) {
+        Boolean collide = false;
+        float x_Left = x.getX() + 40;
+        float x_Right = x.getX()+x.getWidth() - 40;
+        float x_Top = x.getY()+x.getHeight() - 40;
+        float x_Bottom = x.getY() + 40;
+        
+        float y_Left = y.getX() + 40;
+        float y_Right = y.getX()+y.getWidth() - 40;
+        float y_Top = y.getY()+y.getHeight() - 40;
+        float y_Bottom = y.getY() + 40;
+        
 
+        if (x_Left < y_Right && x_Right > y_Left &&
+              x_Top > y_Bottom && x_Bottom < y_Top) {
+            collide = true;
+        }
+        return collide;
+    }
 }

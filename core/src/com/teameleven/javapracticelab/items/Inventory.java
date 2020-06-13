@@ -84,7 +84,7 @@ public class Inventory {
 public void addRadomItem_fruit(boolean have_axe) {
     	
     	if (have_axe == false) {
-	    	fruit_choose = random.nextInt(7);
+	    	fruit_choose = random.nextInt(9);
 	    	
 	    	if (fruit_choose == 0) {
 	    		get_fruits_msg.showMessageDialog(null, "사과 획득!");
@@ -110,7 +110,13 @@ public void addRadomItem_fruit(boolean have_axe) {
 	    		get_fruits_msg.showMessageDialog(null, "나뭇가지 획득!");
 	    		this.addItem(new Branch());
 	    	}
-	    	if (fruit_choose > 5) {
+	    	
+	    	if (fruit_choose == 6 || fruit_choose == 7) {
+	    		get_fruits_msg.showMessageDialog(null, "덩굴 획득!");
+	    		this.addItem(new Vine());
+	    	}
+	    	
+	    	if (fruit_choose > 7) {
 	    		get_fruits_msg.showMessageDialog(null, "아무것도 없었다...");
 	    	}
     	
@@ -152,7 +158,13 @@ public void addRadomItem_fruit(boolean have_axe) {
 	    		get_fruits_msg.showMessageDialog(null, "단단한 목재 획득!");
 	    		this.addItem(new HardWood());
 	    	}
-	    	if (fruit_choose >9) {
+	    	
+	    	if (fruit_choose == 9 || fruit_choose == 10) {
+	    		get_fruits_msg.showMessageDialog(null, "덩굴 획득!");
+	    		this.addItem(new Vine());
+	    	}
+	    	
+	    	if (fruit_choose >10) {
 	    		get_fruits_msg.showMessageDialog(null, "아무것도 없었다...");
 	    	}
 	    	

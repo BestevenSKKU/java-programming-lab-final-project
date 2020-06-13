@@ -33,6 +33,9 @@ public class Player extends Sprite {
     float positionX = 0.0f;
     float positionY = 0.0f;
 
+    float tmp_positionX = 0.0f;
+    float tmp_positionY = 0.0f;
+    
     Texture[] img = new Texture[2];
     TextureRegion[][] animationFrame = new TextureRegion[2][];
     Animation<TextureRegion>[] animation = new Animation[2];
@@ -82,9 +85,17 @@ public class Player extends Sprite {
         this.setPosition(positionX, positionY);
         this.draw(batch);
     }
+    
+    public void back_pos() {
+    	positionX = tmp_positionX;
+    	positionY = tmp_positionY;
+    }
 
     public void spriteControl() {
-
+    	
+    	tmp_positionX = positionX;
+    	tmp_positionY = positionY;
+    	
         int speed = 4;
         boolean directionChanged = false;
         

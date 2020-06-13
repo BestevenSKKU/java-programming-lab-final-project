@@ -1,15 +1,13 @@
 package com.teameleven.javapracticelab.items;
 
-public class NormalStones extends Stone{
-	
-	public NormalStones(){
-		this.setName("돌멩이");
+public class Vine extends Wood{
+	public Vine(){
+		this.setName("덩굴");
 	}
 
 	@Override
 	public void useItem() {
 		// 아이템 사용시 이벤트
 	}
-	
 }
 
