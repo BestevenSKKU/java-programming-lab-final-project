@@ -56,6 +56,8 @@ public class InitGameScreen implements Screen {
     private Label lblSave;
     private JOptionPane msg = new JOptionPane();
     private Music Bgm;
+    private String islandName;
+    private String gender;
     
     //상호작용 테스트
     Space_icon space_icon;
@@ -103,6 +105,8 @@ public class InitGameScreen implements Screen {
     public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender, String hostname, boolean load_game)  {
         this.game = game;
         this.hostname = hostname;
+        this.islandName = islandName;
+        this.gender = gender;
         
         Gdx.app.log("Game mode", hostname == null ? "single-player" : "multi-player");
         
@@ -280,7 +284,13 @@ public class InitGameScreen implements Screen {
         	game.setScreen(new HelpScreen( game, (InitGameScreen)game.getScreen(), player ));
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-			msg.showMessageDialog(null, "저장 성공!");
+        	try {
+				player.getInventory().saveItem(player.getName(), this.islandName, this.gender);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        	msg.showMessageDialog(null, "저장 성공!");
 			
 			
 			

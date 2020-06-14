@@ -22,10 +22,23 @@ public class Inventory {
     int fish_choose;
     
 
-    public void saveItem() throws IOException {
-    	File file = new File("save.txt");
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-        
+    public void saveItem(String playerName, String islandName, String gender) throws IOException {
+    	
+    	try {
+	    	File file = new File("save.txt");
+	        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+	        if(file.isFile() && file.canWrite()){
+	            bufferedWriter.write(playerName);
+	            bufferedWriter.newLine();
+	            bufferedWriter.write(islandName);
+	            bufferedWriter.newLine();
+	            bufferedWriter.write(gender);
+	            bufferedWriter.newLine();
+	            bufferedWriter.close();
+	        }
+    	} catch (IOException e) {
+    		System.out.println(e);
+    	}
         
     }
     
