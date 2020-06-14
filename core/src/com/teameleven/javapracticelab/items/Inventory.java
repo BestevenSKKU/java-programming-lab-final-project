@@ -9,9 +9,15 @@ import com.teameleven.javapracticelab.utils.Skins;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.teameleven.javapracticelab.utils.Skins;
 import java.util.Random;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Inventory {
     ArrayList<Item> itemList = new ArrayList<>();
+    ArrayList<Item> itemList_all = new ArrayList<>();
     JOptionPane get_fruits_msg = new JOptionPane();
     JOptionPane get_stones_msg = new JOptionPane();
     JOptionPane get_fishs_msg = new JOptionPane();
@@ -20,6 +26,7 @@ public class Inventory {
     int fruit_choose;
     int stone_choose;
     int fish_choose;
+    
     
 
     public void saveItem(String playerName, String islandName, String gender) throws IOException {
@@ -34,6 +41,11 @@ public class Inventory {
 	            bufferedWriter.newLine();
 	            bufferedWriter.write(gender);
 	            bufferedWriter.newLine();
+	            
+	            for (Item item : itemList) {
+	            	bufferedWriter.write(item.getName());
+		            bufferedWriter.newLine();
+	            }
 	            bufferedWriter.close();
 	        }
     	} catch (IOException e) {
@@ -43,11 +55,36 @@ public class Inventory {
     }
     
     public void loadItem() {
-  
+    	
+    		String tmp;
+    	try {
+        	File file = new File("save.txt");
+        	FileReader file_reader = new FileReader(file);
+        	BufferedReader bufReader = new BufferedReader(file_reader);
+        	
+        	bufReader.readLine();
+        	bufReader.readLine();
+        	bufReader.readLine();
+        	while((tmp = bufReader.readLine()) != null){
+
+	        	for(Item item : itemList_all) {
+	        		if (tmp.equals(item.getName())) {
+	        			addItem(item);
+	        		}
+	        	}
+        	}
+        }
+        catch (Exception e) {
+
+        }
     }
     
     public void addItem(Item item) {
         this.itemList.add(item);
+    }
+    
+    public void addItem_2(Item item) {
+        this.itemList_all.add(item);
     }
     
     public void delItem(Item item) {
@@ -243,5 +280,22 @@ public class Inventory {
     	if (stone_choose > 0) {
     		get_stones_msg.showMessageDialog(null, "아무것도 없었다...");
     	}
+    }
+    public void make_all_list(){
+    	addItem_2(new Apple());
+    	addItem_2(new Axe());
+    	addItem_2(new Banana());
+    	addItem_2(new Branch());
+    	addItem_2(new Cod());
+    	addItem_2(new FishingRod());
+    	addItem_2(new HardWood());
+    	addItem_2(new Mango());
+    	addItem_2(new NormalStones());
+    	addItem_2(new Octopus());
+    	addItem_2(new Salmon());
+    	addItem_2(new SoftWood());
+    	addItem_2(new Tuna());
+    	addItem_2(new Vine());
+    	addItem_2(new Peach());
     }
 }

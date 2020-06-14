@@ -108,6 +108,7 @@ public class InitGameScreen implements Screen {
         this.islandName = islandName;
         this.gender = gender;
         
+        
         Gdx.app.log("Game mode", hostname == null ? "single-player" : "multi-player");
         
         //충돌테스트
@@ -179,13 +180,20 @@ public class InitGameScreen implements Screen {
             this.configSocketEvents();
         }
 
+        player.getInventory().make_all_list();
+        if (load_game == true) {
+        	player.getInventory().loadItem();
+        }
         
-        for(int i=1;i<=100;i++) {
-        	player.getInventory().addItem(new SoftWood());
-        	player.getInventory().addItem(new NormalStones());
-        	player.getInventory().addItem(new Branch());
-        	player.getInventory().addItem(new Vine());
-        	
+        if (!load_game) {
+        
+	        for(int i=1;i<=100;i++) {
+	        	player.getInventory().addItem(new SoftWood());
+	        	player.getInventory().addItem(new NormalStones());
+	        	player.getInventory().addItem(new Branch());
+	        	player.getInventory().addItem(new Vine());
+	        	
+	        }
         }
         // item test
 //        player.getInventory().addItem(new SoftWood());
