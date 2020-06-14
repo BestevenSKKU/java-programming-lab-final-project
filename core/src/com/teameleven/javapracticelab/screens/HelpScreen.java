@@ -90,7 +90,7 @@ public class HelpScreen implements Screen {
         });
         //stage.addActor(back);
 
-        	helpList.add(new Label("이동키 w,a,s,d" ,Skins.korean, "black"));
+        	helpList.add(new Label("이동키  W,A,S,D" ,Skins.korean, "black"));
         	helpList.get(0).setAlignment(Align.left);
             helpList.get(0).setPosition(250,500+0*50);
             stage.addActor(helpList.get(0));
@@ -100,12 +100,12 @@ public class HelpScreen implements Screen {
             helpList.get(1).setPosition(250,500-1*50);
             stage.addActor(helpList.get(1));
 
-            helpList.add(new Label("인벤토리창: e" ,Skins.korean, "black"));
+            helpList.add(new Label("인벤토리창: E" ,Skins.korean, "black"));
         	helpList.get(2).setAlignment(Align.left);
             helpList.get(2).setPosition(250,500-2*50);
             stage.addActor(helpList.get(2));
             
-            helpList.add(new Label("제작창: c" ,Skins.korean, "black"));
+            helpList.add(new Label("제작창: C" ,Skins.korean, "black"));
         	helpList.get(3).setAlignment(Align.left);
             helpList.get(3).setPosition(250,500-3*50);
             stage.addActor(helpList.get(3));
