@@ -1,9 +1,6 @@
 package com.teameleven.javapracticelab.screens;
 
-import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -39,7 +36,7 @@ public class CraftingScreen implements Screen {
       
     private Texture texture;
     private Label title;
-    int row_height = Gdx.graphics.getWidth() / 10;
+    int rowHeight = Gdx.graphics.getWidth() / 10;
     ArrayList<Label> itemList = new ArrayList<Label>();
 
     ArrayList<Label> craftList = new ArrayList<Label>();
@@ -63,7 +60,7 @@ public class CraftingScreen implements Screen {
         texture = new Texture(Gdx.files.internal("inventory_img.png"));//인벤토리창과 동일 배경
 
         title = new Label("제작 목록   (나가기 Esc)", Skins.korean, "black");
-        title.setSize(Gdx.graphics.getWidth(),row_height);
+        title.setSize(Gdx.graphics.getWidth(), rowHeight);
         title.setPosition(0,600);
         title.setAlignment(Align.center);
         stage.addActor(title);

@@ -11,12 +11,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.teameleven.javapracticelab.texture.Textures;
 import com.teameleven.javapracticelab.utils.Gender;
 
-public class Night_mask extends Sprite {
-	boolean isplayer_house;
+public class NightMask extends Sprite {
 	float positionX = -2000;
 	float positionY = -2000;
 
-	public Night_mask() {
+	public NightMask() {
 		super(new Texture("night_mask.png"));
     }
 	

@@ -5,7 +5,6 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -21,12 +20,12 @@ public class Villager extends Sprite {
 
     String name;
     Gender gender;
-    private float move_cycle = 0;
-    private int move_dir = 0;
+    private float moveCycle = 0;
+    private int moveDir = 0;
     private int speed = 5;
     Random random = new Random();
-    JOptionPane talk_msg = new JOptionPane();
-    boolean first_talk = false;
+    JOptionPane talkMsg = new JOptionPane();
+    boolean firstTalk = false;
 
     public void setPositionX(float positionX) {
         this.positionX = positionX;
@@ -39,8 +38,8 @@ public class Villager extends Sprite {
     float positionX;
     float positionY;
     
-    float tmp_positionX = 0.0f;
-    float tmp_positionY = 0.0f;
+    float tmpPositionX = 0.0f;
+    float tmpPositionY = 0.0f;
     
     Texture img;
     TextureRegion[] animationFrames;
@@ -65,9 +64,9 @@ public class Villager extends Sprite {
         this.draw(batch);
     }
 
-    public void back_pos() {
-    	positionX = tmp_positionX;
-    	positionY = tmp_positionY;
+    public void backPos() {
+    	positionX = tmpPositionX;
+    	positionY = tmpPositionY;
     }
 
     public void talk(Player player) {
@@ -76,33 +75,33 @@ public class Villager extends Sprite {
     
     public void spriteControl() {
     	
-    	tmp_positionX = positionX;
-    	tmp_positionY = positionY;
+    	tmpPositionX = positionX;
+    	tmpPositionY = positionY;
     	
-    	if (move_cycle > 100) {
-    		move_dir = 4;
+    	if (moveCycle > 100) {
+    		moveDir = 4;
     	}
-    	if (move_cycle > 200) {
-    		move_cycle = 0;
-    		move_dir = random.nextInt(4);
+    	if (moveCycle > 200) {
+    		moveCycle = 0;
+    		moveDir = random.nextInt(4);
     	}
     	
     	
-    	if(move_dir == 0) {
+    	if(moveDir == 0) {
     		positionX = positionX - 3;
     	}
-    	if(move_dir == 1) {
+    	if(moveDir == 1) {
     		positionX = positionX + 3;
     	}
-    	if(move_dir == 2) {
+    	if(moveDir == 2) {
     		positionY = positionY - 3;
     	}
-    	if(move_dir == 3) {
+    	if(moveDir == 3) {
     		positionY = positionY + 3;
     	}
-    	if(move_dir == 4) {
+    	if(moveDir == 4) {
 
     	}
-    	move_cycle += random.nextInt(4);
+    	moveCycle += random.nextInt(4);
     }
 }

@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
@@ -22,9 +21,6 @@ import com.teameleven.javapracticelab.characters.*;
 import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.characters.Villager;
 import com.teameleven.javapracticelab.items.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import com.teameleven.javapracticelab.utils.Gender;
 import com.teameleven.javapracticelab.utils.Skins;
@@ -35,7 +31,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,32 +55,32 @@ public class InitGameScreen implements Screen {
     private String gender;
     
     //상호작용 테스트
-    Space_icon space_icon;
-    Wait_icon wait_icon;
-    private boolean player_coli_move = false;
-    private boolean player_coli_tree = false;
-    private boolean try_tree = false;
-    private boolean player_coli_stone = false;
-    private boolean try_stone = false;
-    private boolean player_coli_pond = false;
-    private boolean try_pond = false;
-    private boolean player_coli_house = false;
-    private boolean try_house = false;
-    private boolean player_coli_villager = false;
-    private boolean try_talk = false;
-    private int cooltime_tree = 0;
-    private int cooltime_stone = 0;
-    private int cooltime_pond = 0;
-    private int cooltime_talk = 0;
-    ArrayList<Boolean> villagers_coli_move = new ArrayList<Boolean>();
+    SpaceIcon spaceIcon;
+    WaitIcon waitIcon;
+    private boolean playerColiMove = false;
+    private boolean playerColiTree = false;
+    private boolean tryTree = false;
+    private boolean playerColiStone = false;
+    private boolean tryStone = false;
+    private boolean playerColiPond = false;
+    private boolean tryPond = false;
+    private boolean playerColiHouse = false;
+    private boolean tryHouse = false;
+    private boolean playerColiVillager = false;
+    private boolean tryTalk = false;
+    private int cooltimeTree = 0;
+    private int cooltimeStone = 0;
+    private int cooltimePond = 0;
+    private int cooltimeTalk = 0;
+    ArrayList<Boolean> villagersColiMove = new ArrayList<Boolean>();
     //
     
     private Socket socket;
 
     Player player;
-    Map_forest map;
+    mapForest map;
     Sea sea;
-    Night_mask night_mask;
+    NightMask nightMask;
     HashMap<String, Player> friendlyPlayers;
     ArrayList<Villager> villagers = new ArrayList<Villager>();
     ArrayList<House> houses = new ArrayList<House>();
@@ -113,8 +108,8 @@ public class InitGameScreen implements Screen {
         Gdx.app.log("Game mode", hostname == null ? "single-player" : "multi-player");
         
         //충돌테스트/
-        space_icon = new Space_icon();
-        wait_icon = new Wait_icon();
+        spaceIcon = new SpaceIcon();
+        waitIcon = new WaitIcon();
         //
         
         Bgm=Gdx.audio.newMusic(Gdx.files.internal("bgm.mp3"));
@@ -158,19 +153,19 @@ public class InitGameScreen implements Screen {
         }
         
 
-        night_mask=new Night_mask();
-        map = new Map_forest();
+        nightMask =new NightMask();
+        map = new mapForest();
         sea = new Sea();
         player = new Player(playerName, playerGender);
         friendlyPlayers = new HashMap<>();
-        night_mask=new Night_mask();
+        nightMask =new NightMask();
         
         villagers.add(new Jackson("잭슨", Gender.MALE));
         villagers.add(new Neogul("너굴", Gender.MALE));
         villagers.add(new Jjuni("쭈니", Gender.MALE));
-        villagers_coli_move.add(false);
-        villagers_coli_move.add(false);
-        villagers_coli_move.add(false);
+        villagersColiMove.add(false);
+        villagersColiMove.add(false);
+        villagersColiMove.add(false);
         
         mapSetting();
         
@@ -184,7 +179,7 @@ public class InitGameScreen implements Screen {
             this.configSocketEvents();
         }
 
-        player.getInventory().make_all_list();
+        player.getInventory().makeAllList();
         if (load_game == true) {
         	player.getInventory().loadItem();
         }
@@ -224,7 +219,7 @@ public class InitGameScreen implements Screen {
         batch.begin();
         sea.action(batch);
         map.action(batch);
-        night_mask.action(batch);
+        nightMask.action(batch);
         
         for(House house : houses) {
         	house.action(batch);
@@ -243,12 +238,12 @@ public class InitGameScreen implements Screen {
         
         for(Villager villager : villagers) {
         	
-        	villagers_coli_move.set(vil_cnt, false);
+        	villagersColiMove.set(vil_cnt, false);
         	villager.action(batch);
-        	villager_coli_move_ck(vil_cnt, villager);
+        	villagerColiMoveCk(vil_cnt, villager);
         	
-        	if (villagers_coli_move.get(vil_cnt)) {
-        		villager.back_pos();
+        	if (villagersColiMove.get(vil_cnt)) {
+        		villager.backPos();
             }
         	vil_cnt++;
         }
@@ -262,12 +257,12 @@ public class InitGameScreen implements Screen {
         
         
         //전체 움직임 충돌 
-        player_coli_move_ck();
+        playerColiMoveCk();
         
-        if (player_coli_move) {
-        	player.back_pos();
+        if (playerColiMove) {
+        	player.backPos();
         }
-        player_coli_work();
+        playerColiWork();
        
         batch.end();
         
@@ -304,240 +299,242 @@ public class InitGameScreen implements Screen {
 				e.printStackTrace();
 			}
         	msg.showMessageDialog(null, "저장 성공!");
-			
-			
-			
         }
     }
-    public void villager_coli_move_ck(int vil_cnt, Villager villager) {
+    public void villagerColiMoveCk(int vilCnt, Villager villager) {
     	
     	
     	for(Tree tree : trees) {
-        	if(isCollition_for_move(tree, villager)) {
-        		villagers_coli_move.set(vil_cnt, true);
+        	if(isCollitionForMove(tree, villager)) {
+        		villagersColiMove.set(vilCnt, true);
         		break;
         	}
         }
         
         for(Stone stone : stones) {
-        	if(isCollition_for_move(stone, villager)) {
-        		villagers_coli_move.set(vil_cnt, true);
+        	if(isCollitionForMove(stone, villager)) {
+        		villagersColiMove.set(vilCnt, true);
         		break;
         	}
         }
 
         for(House house : houses) {
-        	if(isCollition_for_move(house, villager)) {
-        		villagers_coli_move.set(vil_cnt, true);
+        	if(isCollitionForMove(house, villager)) {
+        		villagersColiMove.set(vilCnt, true);
         		break;
         	}
         }
         
         for(Pond pond : ponds) {
-        	if(isCollition_for_move(pond, villager)) {
-        		villagers_coli_move.set(vil_cnt, true);
+        	if(isCollitionForMove(pond, villager)) {
+        		villagersColiMove.set(vilCnt, true);
         		break;
         	}
         }
         
-    	if(!isCollition_for_move(map, villager)) {
-    		villagers_coli_move.set(vil_cnt, true);
+    	if(!isCollitionForMove(map, villager)) {
+    		villagersColiMove.set(vilCnt, true);
     	}
         
         
         
     }
     
-    public void player_coli_work() {
+    public void playerColiWork() {
     	 //나무테스트
-        if (player_coli_tree == true) {
+        if (playerColiTree == true) {
         	
-	        space_icon.setPosition(player.getX(), player.getY()+175);
-	        space_icon.action(batch);
+	        spaceIcon.setPosition(player.getX(), player.getY()+175);
+	        spaceIcon.action(batch);
 	        
 	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-	        	try_tree = true;
+	        	tryTree = true;
 	        }
-	        if (try_tree == true && cooltime_tree < 100 ) {
-	        	wait_icon.setPosition(player.getX()+10, player.getY()+220);
-		        wait_icon.action(batch);
-	        	cooltime_tree ++;
+	        if (tryTree == true && cooltimeTree < 100 ) {
+	        	waitIcon.setPosition(player.getX()+10, player.getY()+220);
+		        waitIcon.action(batch);
+	        	cooltimeTree++;
 	        }
-	        if (try_tree == true && cooltime_tree >= 100) {
-	        	player.getInventory().addRadomItem_fruit(player.getInventory().ckItems(new Axe(), 1));
-		        try_tree = false;
-		        cooltime_tree = 0;
+	        if (tryTree == true && cooltimeTree >= 100) {
+	        	player.getInventory().addRadomItemFruit(player.getInventory().ckItems(new Axe(), 1));
+		        tryTree = false;
+		        cooltimeTree = 0;
 	        }
 	        
         }
         else {
-        	cooltime_tree = 0;
-        	try_tree = false;
+        	cooltimeTree = 0;
+        	tryTree = false;
         	}
         
         //돌 테스트
-        if (player_coli_stone == true) {
+        if (playerColiStone == true) {
         	
-	        space_icon.setPosition(player.getX(), player.getY()+175);
-	        space_icon.action(batch);
+	        spaceIcon.setPosition(player.getX(), player.getY()+175);
+	        spaceIcon.action(batch);
 	        
 	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-	        	try_stone = true;
+	        	tryStone = true;
 	        }
-	        if (try_stone == true && cooltime_stone < 100 ) {
-	        	wait_icon.setPosition(player.getX()+10, player.getY()+220);
-		        wait_icon.action(batch);
-	        	cooltime_stone ++;
+	        if (tryStone == true && cooltimeStone < 100 ) {
+	        	waitIcon.setPosition(player.getX()+10, player.getY()+220);
+		        waitIcon.action(batch);
+	        	cooltimeStone++;
 	        }
-	        if (try_stone == true && cooltime_stone >= 100) {
-	        	player.getInventory().addRadomItem_stone();
-		        try_stone = false;
-		        cooltime_stone = 0;
+	        if (tryStone == true && cooltimeStone >= 100) {
+	        	player.getInventory().addRadomItemStone();
+		        tryStone = false;
+		        cooltimeStone = 0;
 	        }
 	        
         }
         else {
-        	cooltime_stone = 0;
-        	try_stone = false;
+        	cooltimeStone = 0;
+        	tryStone = false;
         }       
         
         //낚시 테스트
-        if (player_coli_pond == true) {
+        if (playerColiPond == true) {
         	
-	        space_icon.setPosition(player.getX(), player.getY()+175);
-	        space_icon.action(batch);
+	        spaceIcon.setPosition(player.getX(), player.getY()+175);
+	        spaceIcon.action(batch);
 	        
 	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-	        	try_pond = true;
+	        	tryPond = true;
 	        }
-	        if (try_pond == true && cooltime_pond < 100 ) {
-	        	wait_icon.setPosition(player.getX()+10, player.getY()+220);
-		        wait_icon.action(batch);
-	        	cooltime_pond ++;
+	        if (tryPond == true && cooltimePond < 100 ) {
+	        	waitIcon.setPosition(player.getX()+10, player.getY()+220);
+		        waitIcon.action(batch);
+	        	cooltimePond++;
 	        }
-	        if (try_pond == true && cooltime_pond >= 100) {
-	        	player.getInventory().addRadomItem_pond(player.getInventory().ckItems(new FishingRod(), 1));
-		        try_pond = false;
-		        cooltime_pond = 0;
+	        if (tryPond == true && cooltimePond >= 100) {
+	        	player.getInventory().addRadomItemPond(player.getInventory().ckItems(new FishingRod(), 1));
+		        tryPond = false;
+		        cooltimePond = 0;
 	        }
 	        
         }
         
         
         //주민대화 테스트
-        if (player_coli_villager == true) {
+        if (playerColiVillager == true) {
         	
-	        space_icon.setPosition(player.getX(), player.getY()+175);
-	        space_icon.action(batch);
+	        spaceIcon.setPosition(player.getX(), player.getY()+175);
+	        spaceIcon.action(batch);
 	        
 	        
 	        
 	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-	        	try_talk = true;
+	        	tryTalk = true;
 	        }
-	        if (try_talk == true && cooltime_talk < 100 ) {
+	        if (tryTalk == true && cooltimeTalk < 100 ) {
 	        	
-		        cooltime_talk +=10;
+		        cooltimeTalk +=10;
 	        }
-	        if (try_talk == true && cooltime_talk >= 100) {
+	        if (tryTalk == true && cooltimeTalk >= 100) {
 	        	for(Villager villager : villagers) {
 	        		if (isCollition(villager, player)) {
 	        			villager.talk(player);
 	        			break;
 	        		}
 	        	}
-	        	try_talk = false;
-	        	cooltime_talk = 0;
+	        	tryTalk = false;
+	        	cooltimeTalk = 0;
 	        }
 	        
         }
         
     }
     
-    public void player_coli_move_ck() {
+    public void playerColiMoveCk() {
     	
-    	player_coli_move = false;
+    	playerColiMove = false;
     	
     	for(Tree tree : trees) {
-        	if(isCollition_for_move(tree, player)) {
-        		player_coli_move = true;
+        	if(isCollitionForMove(tree, player)) {
+        		playerColiMove = true;
         		break;
         	}
         }
         
         for(Stone stone : stones) {
-        	if(isCollition_for_move(stone, player)) {
-        		player_coli_move = true;
+        	if(isCollitionForMove(stone, player)) {
+        		playerColiMove = true;
         		break;
         	}
         }
 
         for(House house : houses) {
-        	if(isCollition_for_move(house, player)) {
-        		player_coli_move = true;
+        	if(isCollitionForMove(house, player)) {
+        		playerColiMove = true;
         		break;
         	}
         }
         
         for(Pond pond : ponds) {
-        	if(isCollition_for_move(pond, player)) {
-        		player_coli_move = true;
+        	if(isCollitionForMove(pond, player)) {
+        		playerColiMove = true;
         		break;
         	}
         }
         
     	if(!isCollition(map, player)) {
-    		player_coli_move = true;
+    		playerColiMove = true;
     	}
         
         
         //나무와 충돌
         for(Tree tree : trees) {
         	if(isCollition(tree, player)) {
-        		player_coli_tree = true;
+        		playerColiTree = true;
         		break;
         	}
-        	else {player_coli_tree = false;}
+        	else {
+                playerColiTree = false;}
         }
         
         //돌과 충돌
         for(Stone stone : stones) {
         	if(isCollition(stone, player)) {
-        		player_coli_stone = true;
+        		playerColiStone = true;
         		break;
         	}
-        	else {player_coli_stone = false;}
+        	else {
+                playerColiStone = false;}
         }
         //집과 충돌
         for(House house : houses) {
         	if(isCollition(house, player)) {
-        		player_coli_house = true;
+        		playerColiHouse = true;
         		break;
         	}
-        	else {player_coli_house = false;}
+        	else {
+                playerColiHouse = false;}
         }
         
         //연못과 충돌
         for(Pond pond : ponds) {
         	if(isCollition(pond, player)) {
-        		player_coli_pond = true;
+        		playerColiPond = true;
         		break;
         	}
-        	else {player_coli_pond = false;}
+        	else {
+                playerColiPond = false;}
         }
         
         //바다와 충돌
-        if(!isCollition_for_move(map, player)) {
-        	player_coli_pond = true;
+        if(!isCollitionForMove(map, player)) {
+        	playerColiPond = true;
         }
         
         //주민과 충돌
         for(Villager villager : villagers) {
         	if(isCollition(villager, player)) {
-        		player_coli_villager = true;
+        		playerColiVillager = true;
         		break;
         	}
-        	else {player_coli_villager = false;}
+        	else {
+                playerColiVillager = false;}
         }
     }
     
@@ -769,39 +766,39 @@ public class InitGameScreen implements Screen {
     
     public boolean isCollition(Sprite x, Sprite y) {
         Boolean collide = false;
-        float x_Left = x.getX() + 20;
-        float x_Right = x.getX()+x.getWidth() - 20;
-        float x_Top = x.getY()+x.getHeight() - 20;
-        float x_Bottom = x.getY() + 20;
+        float xLeft = x.getX() + 20;
+        float xRight = x.getX()+x.getWidth() - 20;
+        float xTop = x.getY()+x.getHeight() - 20;
+        float xBottom = x.getY() + 20;
         
-        float y_Left = y.getX() + 20;
-        float y_Right = y.getX()+y.getWidth() - 20;
-        float y_Top = y.getY()+y.getHeight() - 20;
-        float y_Bottom = y.getY() + 20;
+        float yLeft = y.getX() + 20;
+        float yRight = y.getX()+y.getWidth() - 20;
+        float yTop = y.getY()+y.getHeight() - 20;
+        float yBottom = y.getY() + 20;
         
 
-        if (x_Left < y_Right && x_Right > y_Left &&
-              x_Top > y_Bottom && x_Bottom < y_Top) {
+        if (xLeft < yRight && xRight > yLeft &&
+              xTop > yBottom && xBottom < yTop) {
             collide = true;
         }
         return collide;
     }
     
-    public boolean isCollition_for_move(Sprite x, Sprite y) {
+    public boolean isCollitionForMove(Sprite x, Sprite y) {
         Boolean collide = false;
-        float x_Left = x.getX() + 40;
-        float x_Right = x.getX()+x.getWidth() - 40;
-        float x_Top = x.getY()+x.getHeight() - 40;
-        float x_Bottom = x.getY() + 40;
+        float xLeft = x.getX() + 40;
+        float xRight = x.getX()+x.getWidth() - 40;
+        float xTop = x.getY()+x.getHeight() - 40;
+        float xBottom = x.getY() + 40;
         
-        float y_Left = y.getX() + 40;
-        float y_Right = y.getX()+y.getWidth() - 40;
-        float y_Top = y.getY()+y.getHeight() - 40;
-        float y_Bottom = y.getY() + 40;
+        float yLeft = y.getX() + 40;
+        float yRight = y.getX()+y.getWidth() - 40;
+        float yTop = y.getY()+y.getHeight() - 40;
+        float yBottom = y.getY() + 40;
         
 
-        if (x_Left < y_Right && x_Right > y_Left &&
-              x_Top > y_Bottom && x_Bottom < y_Top) {
+        if (xLeft < yRight && xRight > yLeft &&
+              xTop > yBottom && xBottom < yTop) {
             collide = true;
         }
         return collide;

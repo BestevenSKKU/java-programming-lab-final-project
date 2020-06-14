@@ -11,12 +11,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.teameleven.javapracticelab.texture.Textures;
 import com.teameleven.javapracticelab.utils.Gender;
 
-public class Space_icon extends Sprite {
-	boolean isplayer_house;
+public class SpaceIcon extends Sprite {
 	float positionX = 0.0f;
 	float positionY = 0.0f;
 	
-	public Space_icon() {
+	public SpaceIcon() {
 		super(new Texture("space_icon.png"));
 
     }

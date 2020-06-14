@@ -12,7 +12,6 @@ import com.teameleven.javapracticelab.texture.Textures;
 import com.teameleven.javapracticelab.utils.Gender;
 
 public class Tree extends Sprite {
-	boolean isplayer_house;
 	float positionX = 0.0f;
 	float positionY = 0.0f;
 	

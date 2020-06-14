@@ -11,14 +11,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.teameleven.javapracticelab.texture.Textures;
 import com.teameleven.javapracticelab.utils.Gender;
 
-public class Map_forest extends Sprite {
-	boolean isplayer_house;
+public class mapForest extends Sprite {
 	float positionX = -1200;
 	float positionY = -800;
 	float Width = 2549;
 	float Height = 2477;
 	
-	public Map_forest() {
+	public mapForest() {
 		super(new Texture("forest_map.png"));
     }
 	

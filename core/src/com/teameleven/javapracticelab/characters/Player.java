@@ -8,14 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.teameleven.javapracticelab.items.Inventory;
-import com.teameleven.javapracticelab.screens.InitGameScreen;
-import com.teameleven.javapracticelab.screens.InventoryScreen;
 import com.teameleven.javapracticelab.texture.Textures;
 import com.teameleven.javapracticelab.utils.Direction;
 import com.teameleven.javapracticelab.utils.Gender;
-
-import java.util.EnumMap;
-import java.util.Map;
 
 
 public class Player extends Sprite {
@@ -33,8 +28,8 @@ public class Player extends Sprite {
     float positionX = 0.0f;
     float positionY = 0.0f;
 
-    float tmp_positionX = 0.0f;
-    float tmp_positionY = 0.0f;
+    float tmpPositionX = 0.0f;
+    float tmpPositionY = 0.0f;
     
     Texture[] img = new Texture[2];
     TextureRegion[][] animationFrame = new TextureRegion[2][];
@@ -86,15 +81,15 @@ public class Player extends Sprite {
         this.draw(batch);
     }
     
-    public void back_pos() {
-    	positionX = tmp_positionX;
-    	positionY = tmp_positionY;
+    public void backPos() {
+    	positionX = tmpPositionX;
+    	positionY = tmpPositionY;
     }
 
     public void spriteControl() {
     	
-    	tmp_positionX = positionX;
-    	tmp_positionY = positionY;
+    	tmpPositionX = positionX;
+    	tmpPositionY = positionY;
     	
         int speed = 4;
         boolean directionChanged = false;

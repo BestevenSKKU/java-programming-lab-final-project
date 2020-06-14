@@ -12,7 +12,6 @@ import com.teameleven.javapracticelab.texture.Textures;
 import com.teameleven.javapracticelab.utils.Gender;
 
 public class Sea extends Sprite {
-	boolean isplayer_house;
 	float positionX = -2000;
 	float positionY = -2000;
 

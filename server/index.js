@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
       gender: data.gender,
     });
     console.log('<System> New Player Information : ' + data.name + '\t' + socket.id);
-    console.log(players);
+    //console.log(players);
     // 새로운 플레이어 접속시 기존 플레이어들에게 새 플레이어 정보 전달
     socket.broadcast.emit(
       'newPlayer',
@@ -66,6 +66,6 @@ io.on('connection', (socket) => {
       id: socket.id,
     });
     players = players.filter((item) => item.id !== socket.id);
-    console.log(players);
+    //console.log(players);
   });
 });
