@@ -575,9 +575,9 @@ public class InitGameScreen implements Screen {
         }
     }
 
-    public void connectSocket(String hostname) {
+    public void connectSocket(String host) {
         try {
-            socket = IO.socket("http://" + hostname + ":8080");
+            socket = IO.socket("http://" + host);
             socket.connect();
         }
         catch (Exception e) {
