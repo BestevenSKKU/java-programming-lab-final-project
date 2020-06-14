@@ -88,8 +88,13 @@ public class InitGameScreen implements Screen {
 
     boolean[] inventoryOpenFlg = {false};
 
-    public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender) {
+    String hostname;
+
+    public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender, String hostname) {
         this.game = game;
+        this.hostname = hostname;
+
+        Gdx.app.log("Game mode", hostname == null ? "single-player" : "multi-player");
         
         //충돌테스트
         space_icon = new Space_icon();
@@ -152,9 +157,11 @@ public class InitGameScreen implements Screen {
         camera1.position.set(player.getX(),player.getY(),0);
         camera1.update();
 
-        this.connectSocket();
-        this.configSocketEvents();
-
+        if (hostname != null) {
+            Gdx.app.log("HOSTNAME", hostname);
+            this.connectSocket(hostname);
+            this.configSocketEvents();
+        }
 
         
         for(int i=1;i<=100;i++) {
@@ -180,7 +187,9 @@ public class InitGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        updateServer(delta);
+        if (hostname != null) {
+            updateServer(delta);
+        }
         Gdx.gl.glClearColor(1,1,1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
@@ -455,14 +464,6 @@ public class InitGameScreen implements Screen {
         System.out.println("resize");
 
 
-        System.out.println("-----------before created----------------");
-
-        for(Actor actor : stage.getActors())
-        {
-            System.out.println(actor.getName());
-        }
-
-
 
         inventory = new TextButton("Inventory", Skins.craftacular);
         int buttonWidth = Gdx.graphics.getWidth() / 5;
@@ -483,12 +484,6 @@ public class InitGameScreen implements Screen {
         inventory.setName("btnInventory");
         inventory.setTouchable(Touchable.enabled);
         //stage.addActor(inventory);
-        System.out.println("-------------after created-----------");
-
-        for(Actor actor : stage.getActors())
-        {
-            System.out.println(actor.getName());
-        }
 
 
     }
@@ -536,9 +531,9 @@ public class InitGameScreen implements Screen {
         }
     }
 
-    public void connectSocket() {
+    public void connectSocket(String hostname) {
         try {
-            socket = IO.socket("http://localhost:8080");
+            socket = IO.socket("http://" + hostname + ":8080");
             socket.connect();
         }
         catch (Exception e) {

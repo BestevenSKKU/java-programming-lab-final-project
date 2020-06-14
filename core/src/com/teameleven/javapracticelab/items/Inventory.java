@@ -220,6 +220,4 @@ public class Inventory {
     		get_stones_msg.showMessageDialog(null, "아무것도 없었다...");
     	}
     }
-
-
 }
