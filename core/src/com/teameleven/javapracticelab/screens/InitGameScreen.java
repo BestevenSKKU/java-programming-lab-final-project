@@ -71,6 +71,8 @@ public class InitGameScreen implements Screen {
     private Socket socket;
 
     Player player;
+    Map_forest map;
+    Sea sea;
     HashMap<String, Player> friendlyPlayers;
     ArrayList<Villager> villagers = new ArrayList<Villager>();
     ArrayList<House> houses = new ArrayList<House>();
@@ -122,7 +124,9 @@ public class InitGameScreen implements Screen {
         if (gender.equals("F") || gender.equals("f")) {
             playerGender = Gender.FEMALE;
         }
-
+        
+        map = new Map_forest();
+        sea = new Sea();
         player = new Player(playerName, playerGender);
         friendlyPlayers = new HashMap<>();
         
@@ -181,7 +185,8 @@ public class InitGameScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        
+        sea.action(batch);
+        map.action(batch);
         
         for(House house : houses) {
         	house.action(batch);
@@ -282,6 +287,12 @@ public class InitGameScreen implements Screen {
         		break;
         	}
         }
+        
+    	if(!isCollition_for_move(map, villager)) {
+    		villagers_coli_move.set(vil_cnt, true);
+    	}
+        
+        
         
     }
     
@@ -393,6 +404,11 @@ public class InitGameScreen implements Screen {
         		break;
         	}
         }
+        
+    	if(!isCollition_for_move(map, player)) {
+    		player_coli_move = true;
+    	}
+        
         
         //나무와 충돌
         for(Tree tree : trees) {
