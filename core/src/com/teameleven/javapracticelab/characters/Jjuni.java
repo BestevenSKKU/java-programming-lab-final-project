@@ -25,7 +25,7 @@ public class Jjuni extends Villager {
     JOptionPane talk_msg = new JOptionPane();
     private boolean first_talk = true;
     
-    float positionX = (float)500;
+    float positionX = (float)400;
     float positionY = (float)500;
     
     float tmp_positionX = 0.0f;
