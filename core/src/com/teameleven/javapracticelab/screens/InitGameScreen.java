@@ -50,6 +50,8 @@ public class InitGameScreen implements Screen {
     private Label lblPlayer;
     private Label lblIsland;
     private Label lblHelp;
+    private Label lblSave;
+    private JOptionPane msg = new JOptionPane();
     private Music Bgm;
     
     //상호작용 테스트
@@ -92,7 +94,7 @@ public class InitGameScreen implements Screen {
     Button inventory;
 
     boolean[] inventoryOpenFlg = {false};
-
+    boolean[] SaveFlg= {false};
     String hostname;
 
     public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender, String hostname) {
@@ -134,6 +136,11 @@ public class InitGameScreen implements Screen {
         lblHelp.setPosition(+10,600);
         lblHelp.setAlignment(Align.left);
         stage.addActor(lblHelp);
+        lblSave = new Label("저장: B", Skins.korean, "black");
+        lblSave.setSize(Gdx.graphics.getWidth(),row_height);
+        lblSave.setPosition(+10,550);
+        lblSave.setAlignment(Align.left);
+        stage.addActor(lblSave);
         
         Gender playerGender = Gender.MALE;
         if (gender.equals("F") || gender.equals("f")) {
@@ -268,9 +275,13 @@ public class InitGameScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.H)) {
         	game.setScreen(new HelpScreen( game, (InitGameScreen)game.getScreen(), player ));
         }
-        
+        if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+			msg.showMessageDialog(null, "저장 성공!");
+			
+			
+			
+        }
     }
-    
     public void villager_coli_move_ck(int vil_cnt, Villager villager) {
     	
     	

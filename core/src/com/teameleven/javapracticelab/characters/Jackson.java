@@ -27,8 +27,8 @@ public class Jackson extends Villager {
     JOptionPane talk_msg = new JOptionPane();
     private boolean first_talk = true;
     
-    float positionX = (float)random.nextInt(500);
-    float positionY = (float)(1)*random.nextInt(200)-100;
+    float positionX = (float)300;
+    float positionY = (float)500;
     
     float tmp_positionX = 0.0f;
     float tmp_positionY = 0.0f;
