@@ -155,7 +155,7 @@ public class Inventory {
 		    	}
 		    	
 		    	if (fruit_choose > 7) {
-		    		get_fruits_msg.showMessageDialog(null, "아무것도 없었다.... 도끼가 있으면 어떨까?");
+		    		get_fruits_msg.showMessageDialog(null, "아무것도 없었다....");
 		    	}
 	    	
 	    	}

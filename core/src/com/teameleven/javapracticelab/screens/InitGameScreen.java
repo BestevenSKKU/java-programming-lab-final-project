@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
 import com.teameleven.javapracticelab.BackgroundObjects.*;
 import com.teameleven.javapracticelab.BackgroundObjects.Stone;
+import com.teameleven.javapracticelab.characters.*;
 import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.characters.Villager;
 import com.teameleven.javapracticelab.items.*;
@@ -62,9 +63,12 @@ public class InitGameScreen implements Screen {
     private boolean try_pond = false;
     private boolean player_coli_house = false;
     private boolean try_house = false;
+    private boolean player_coli_villager = false;
+    private boolean try_talk = false;
     private int cooltime_tree = 0;
     private int cooltime_stone = 0;
     private int cooltime_pond = 0;
+    private int cooltime_talk = 0;
     ArrayList<Boolean> villagers_coli_move = new ArrayList<Boolean>();
     //
     
@@ -130,23 +134,14 @@ public class InitGameScreen implements Screen {
         player = new Player(playerName, playerGender);
         friendlyPlayers = new HashMap<>();
         
-        villagers.add(new Villager("잭슨", Gender.MALE));
-        villagers.add(new Villager("너굴", Gender.MALE));
-        villagers.add(new Villager("쭈니", Gender.MALE));
+        villagers.add(new Jackson("잭슨", Gender.MALE));
+        villagers.add(new Neogul("너굴", Gender.MALE));
+        villagers.add(new Jjuni("쭈니", Gender.MALE));
         villagers_coli_move.add(false);
         villagers_coli_move.add(false);
         villagers_coli_move.add(false);
         
-        houses.add(new House(true,0,200));
-        houses.add(new House(false,700,700));
-        
-        ponds.add(new Pond(-1000, 100));
-        
-        trees.add(new Tree(300,200));
-        trees.add(new Tree(-300,-200));
-        
-        stones.add(new Stone(600,-100));
-        stones.add(new Stone(500,-300));
+        mapSetting();
         
         camera1 = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         camera1.position.set(player.getX(),player.getY(),0);
@@ -214,6 +209,7 @@ public class InitGameScreen implements Screen {
             }
         	vil_cnt++;
         }
+        
         for(Map.Entry<String, Player> entry : friendlyPlayers.entrySet()) {
             entry.getValue().draw(batch);
         }
@@ -371,6 +367,35 @@ public class InitGameScreen implements Screen {
 	        
         }
         
+        
+        //주민대화 테스트
+        if (player_coli_villager == true) {
+        	
+	        space_icon.setPosition(player.getX(), player.getY()+175);
+	        space_icon.action(batch);
+	        
+	        
+	        
+	        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+	        	try_talk = true;
+	        }
+	        if (try_talk == true && cooltime_talk < 100 ) {
+	        	
+		        cooltime_talk +=10;
+	        }
+	        if (try_talk == true && cooltime_talk >= 100) {
+	        	for(Villager villager : villagers) {
+	        		if (isCollition(villager, player)) {
+	        			villager.talk(player);
+	        			break;
+	        		}
+	        	}
+	        	try_talk = false;
+	        	cooltime_talk = 0;
+	        }
+	        
+        }
+        
     }
     
     public void player_coli_move_ck() {
@@ -445,8 +470,18 @@ public class InitGameScreen implements Screen {
         	else {player_coli_pond = false;}
         }
         
+        //바다와 충돌
         if(!isCollition_for_move(map, player)) {
         	player_coli_pond = true;
+        }
+        
+        //주민과 충돌
+        for(Villager villager : villagers) {
+        	if(isCollition(villager, player)) {
+        		player_coli_villager = true;
+        		break;
+        	}
+        	else {player_coli_villager = false;}
         }
     }
 
@@ -687,4 +722,79 @@ public class InitGameScreen implements Screen {
         }
         return collide;
     }
+    
+    public void mapSetting() {
+ 	   houses.add(new House(true,0,200));//true false
+        houses.add(new House(false,-100,700));
+        houses.add(new House(false,300,700));
+        houses.add(new House(false,700,700));
+        houses.add(new House(false,-1000,700));
+        
+        ponds.add(new Pond(-1000, 100));
+
+        ponds.add(new Pond(-1000, 1000));
+        
+        trees.add(new Tree(-1000,1300));
+        trees.add(new Tree(-200,700));
+        trees.add(new Tree(1000,700));
+        trees.add(new Tree(300,200));
+        trees.add(new Tree(-300,-400));
+        trees.add(new Tree(-300,-700));
+        trees.add(new Tree(1000,-400));
+        trees.add(new Tree(1000,-700));
+        trees.add(new Tree(0,1400));
+        trees.add(new Tree(200,1400));
+        trees.add(new Tree(400,1400));
+        trees.add(new Tree(600,1400));
+        trees.add(new Tree(800,1400));
+        trees.add(new Tree(1000,1400));
+
+        
+        
+        stones.add(new Stone(600,-100));
+        stones.add(new Stone(500,-300));
+        stones.add(new Stone(600,-300));
+        stones.add(new Stone(-1000,200));
+        stones.add(new Stone(-900,200));
+        stones.add(new Stone(1000,200));
+        stones.add(new Stone(1000,300));
+        stones.add(new Stone(1000,400));
+        stones.add(new Stone(1000,500));
+        stones.add(new Stone(1000,100));
+        stones.add(new Stone(1100,100));
+        stones.add(new Stone(1200,100));
+        stones.add(new Stone(-100,100));
+        stones.add(new Stone(-100,200));
+        stones.add(new Stone(-100,300));
+        stones.add(new Stone(-100,400));
+        stones.add(new Stone(-100,500));
+        stones.add(new Stone(-1100,600));
+        stones.add(new Stone(-1100,700));
+        stones.add(new Stone(-1100,800));
+        stones.add(new Stone(-1100,900));
+        stones.add(new Stone(-1000,600));
+        stones.add(new Stone(-900,600));
+        stones.add(new Stone(-800,600));
+        stones.add(new Stone(0,1300));
+        stones.add(new Stone(100,1300));
+        stones.add(new Stone(200,1300));
+        stones.add(new Stone(300,1300));
+        stones.add(new Stone(400,1300));
+        stones.add(new Stone(500,1300));
+        stones.add(new Stone(600,1300));
+        stones.add(new Stone(700,1300));
+        stones.add(new Stone(800,1300));
+        stones.add(new Stone(900,1300));
+        stones.add(new Stone(1000,1300));
+        stones.add(new Stone(1100,1300));
+        stones.add(new Stone(1200,1300));
+        stones.add(new Stone(-800,-600));
+        stones.add(new Stone(-800,-500));
+        stones.add(new Stone(-800,-400));
+        stones.add(new Stone(-700,-400));
+        stones.add(new Stone(-600,-400));
+        stones.add(new Stone(-600,-500));
+        stones.add(new Stone(-600,-600));
+
+ }
 }
