@@ -21,6 +21,17 @@ public class Inventory {
     int stone_choose;
     int fish_choose;
     
+
+    public void saveItem() throws IOException {
+    	File file = new File("save.txt");
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+        
+        
+    }
+    
+    public void loadItem() {
+  
+    }
     
     public void addItem(Item item) {
         this.itemList.add(item);

@@ -35,6 +35,7 @@ public class StartMenuScreen implements Screen {
     JOptionPane err_msg = new JOptionPane();
     final String[] host = new String[1];
 
+
     public StartMenuScreen(final UsasengCrossing game) {
         this.game = game;
 
@@ -158,10 +159,10 @@ public class StartMenuScreen implements Screen {
         stage.draw();
 
         if (flg[0]) {
-            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0], host[0]));
+            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0], host[0], load_flg[0]));
         }
         if (load_flg[0]) {
-            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0], hostname[0]));
+            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0], hostname[0], load_flg[0]));
         }
     }
 

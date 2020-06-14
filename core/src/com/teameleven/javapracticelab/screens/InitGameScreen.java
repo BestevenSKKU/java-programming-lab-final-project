@@ -22,7 +22,10 @@ import com.teameleven.javapracticelab.characters.*;
 import com.teameleven.javapracticelab.characters.Player;
 import com.teameleven.javapracticelab.characters.Villager;
 import com.teameleven.javapracticelab.items.*;
-
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import com.teameleven.javapracticelab.utils.Gender;
 import com.teameleven.javapracticelab.utils.Skins;
 import io.socket.client.IO;
@@ -95,10 +98,10 @@ public class InitGameScreen implements Screen {
 
     String hostname;
 
-    public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender, String hostname) {
+    public InitGameScreen(final UsasengCrossing game, String playerName, String islandName, String gender, String hostname, boolean load_game)  {
         this.game = game;
         this.hostname = hostname;
-
+        
         Gdx.app.log("Game mode", hostname == null ? "single-player" : "multi-player");
         
         //충돌테스트
@@ -115,6 +118,7 @@ public class InitGameScreen implements Screen {
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        
         
 
         batch = new SpriteBatch();
@@ -502,7 +506,7 @@ public class InitGameScreen implements Screen {
         	else {player_coli_villager = false;}
         }
     }
-
+    
     @Override
     public void resize(int width, int height) {
         System.out.println("resize");
