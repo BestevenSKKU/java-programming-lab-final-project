@@ -15,18 +15,29 @@ import com.teameleven.javapracticelab.utils.Gender;
 
 
 public class Villager extends Sprite {
-    final private String name;
-    final private Gender gender;
+    public String getName() {
+        return name;
+    }
+
+    String name;
+    Gender gender;
     private float move_cycle = 0;
     private int move_dir = 0;
     private int speed = 5;
     Random random = new Random();
     JOptionPane talk_msg = new JOptionPane();
-    private boolean first_talk = false;
-    
-    
-    float positionX = (float)random.nextInt(500);
-    float positionY = (float)(1)*random.nextInt(200)-100;
+    boolean first_talk = false;
+
+    public void setPositionX(float positionX) {
+        this.positionX = positionX;
+    }
+
+    public void setPositionY(float positionY) {
+        this.positionY = positionY;
+    }
+
+    float positionX;
+    float positionY;
     
     float tmp_positionX = 0.0f;
     float tmp_positionY = 0.0f;
@@ -93,12 +104,5 @@ public class Villager extends Sprite {
 
     	}
     	move_cycle += random.nextInt(4);
-    }
-    
-    public float get_x() {
-    	return positionX;
-    }
-    public float get_y() {
-    	return positionY;
     }
 }

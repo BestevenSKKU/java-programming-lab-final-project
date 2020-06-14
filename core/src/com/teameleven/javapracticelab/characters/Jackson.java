@@ -18,48 +18,13 @@ import com.teameleven.javapracticelab.utils.Gender;
 
 
 public class Jackson extends Villager {
-    final private String name;
-    final private Gender gender;
-    private float move_cycle = 0;
-    private int move_dir = 0;
-    private int speed = 5;
-    Random random = new Random();
-    JOptionPane talk_msg = new JOptionPane();
-    private boolean first_talk = true;
-    
-    float positionX = (float)300;
-    float positionY = (float)500;
-    
-    float tmp_positionX = 0.0f;
-    float tmp_positionY = 0.0f;
-    
-    Texture img;
-    TextureRegion[] animationFrames;
-    Animation<TextureRegion> animation;
-    
-    Texture img2;
-    TextureRegion[] animationFrames2;
-    Animation<TextureRegion> animation2;
-    
-    float elapsedTime;
-    
     public Jackson(String name, Gender gender) {
     	super(name, gender);
         this.setTexture(new Texture("villager_" + name + ".png"));
         this.name = name;
         this.gender = gender;
-    }
-
-    public void action(Batch batch) {
-        elapsedTime += Gdx.graphics.getDeltaTime();
-        this.spriteControl();
-        this.setPosition(positionX, positionY);
-        this.draw(batch);
-    }
-
-    public void back_pos() {
-    	positionX = tmp_positionX;
-    	positionY = tmp_positionY;
+		positionX = (float)300;
+		positionY = (float)500;
     }
     
     @Override
@@ -95,45 +60,5 @@ public class Jackson extends Villager {
     		talk_msg.showMessageDialog(null, player.getName() + " 그대를 생각하니 정말로 그대가 나타났군... \n 우리는 정말로 운명이야, 우쭐!");
     		return;
     	}
-    	
-    }
-    
-    public void spriteControl() {
-    	
-    	tmp_positionX = positionX;
-    	tmp_positionY = positionY;
-    	
-    	if (move_cycle > 100) {
-    		move_dir = 4;
-    	}
-    	if (move_cycle > 200) {
-    		move_cycle = 0;
-    		move_dir = random.nextInt(4);
-    	}
-    	
-    	
-    	if(move_dir == 0) {
-    		positionX = positionX - 3;
-    	}
-    	if(move_dir == 1) {
-    		positionX = positionX + 3;
-    	}
-    	if(move_dir == 2) {
-    		positionY = positionY - 3;
-    	}
-    	if(move_dir == 3) {
-    		positionY = positionY + 3;
-    	}
-    	if(move_dir == 4) {
-
-    	}
-    	move_cycle += random.nextInt(4);
-    }
-    
-    public float get_x() {
-    	return positionX;
-    }
-    public float get_y() {
-    	return positionY;
     }
 }

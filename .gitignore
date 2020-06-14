@@ -122,6 +122,9 @@ Thumbs.db
 ## nodejs
 /server/node_modules
 
+## save file
+save.txt
+
 ## build jar
 /desktop/out
 /out

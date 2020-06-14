@@ -336,7 +336,7 @@ public class InitGameScreen implements Screen {
     }
     
     public void player_coli_work() {
-    	 //나무테스
+    	 //나무테스트
         if (player_coli_tree == true) {
         	
 	        space_icon.setPosition(player.getX(), player.getY()+175);
@@ -588,11 +588,22 @@ public class InitGameScreen implements Screen {
     public void updateServer(float dt) {
         timer += dt;
         if(timer >= UPDATE_TIME) {
-            JSONObject data = new JSONObject();
+            JSONObject playerJSONObject = new JSONObject();
+            JSONArray villagersJSONArray = new JSONArray();
             try {
-                data.put("x", player.getX());
-                data.put("y", player.getY());
-                socket.emit("playerMoved", data);
+                playerJSONObject.put("x", player.getX());
+                playerJSONObject.put("y", player.getY());
+
+                for(Villager villager : villagers) {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("x", villager.getX());
+                    jsonObject.put("y", villager.getY());
+                    jsonObject.put("name", villager.getName());
+                    villagersJSONArray.put(jsonObject);
+                }
+
+                socket.emit("playerMoved", playerJSONObject);
+                socket.emit("villagerMoved", villagersJSONArray);
             }
             catch (JSONException e) {
                 Gdx.app.log("SocketIO", "Error Sending update to server");
@@ -678,6 +689,11 @@ public class InitGameScreen implements Screen {
                 JSONArray objects = (JSONArray)args[0];
                 try {
                     Gdx.app.log("SocketIO","기존 플레이어 정보 : " + objects.toString());
+
+                    if (objects.length() == 0) {
+                        Gdx.app.log("System", "다른 플레이어 없음");
+                    }
+
                     for(int i = 0; i < objects.length(); i++) {
                         String name = objects.getJSONObject(i).getString("name");
                         Gender gender = objects.getJSONObject(i).getString("gender").equals("남자") ? Gender.MALE : Gender.FEMALE;
@@ -706,6 +722,32 @@ public class InitGameScreen implements Screen {
                         friendlyPlayers.get(playerId).setPosition(x.floatValue(), y.floatValue());
                     }
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).on("villagerMoved", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                JSONArray data = (JSONArray)args[0];
+
+                try {
+                    for(int i = 0; i < data.length(); i++) {
+                        String name = data.getJSONObject(i).getString("name");
+
+                        Vector2 position = new Vector2();
+                        position.x = (float)data.getJSONObject(i).getDouble("x");
+                        position.y = (float)data.getJSONObject(i).getDouble("y");
+
+                        for(Villager villager : villagers) {
+                            if (villager.getName().equals(name)) {
+                                villager.setPosition(position.x, position.y);
+                                villager.setPositionX(position.x);
+                                villager.setPositionY(position.y);
+                            }
+                        }
+                    }
+                }
+                catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
