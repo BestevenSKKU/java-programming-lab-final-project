@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
@@ -23,6 +21,7 @@ public class StartMenuScreen implements Screen {
     final String[] playerName = new String[1];
     final String[] islandName = new String[1];
     final String[] gender = new String[1];
+    final String[] hostname = new String[1];
 
     public StartMenuScreen(final UsasengCrossing game) {
         this.game = game;
@@ -36,18 +35,33 @@ public class StartMenuScreen implements Screen {
         System.out.println(buttonWidth + "  " + buttonHeight);
 
         // Button
-        Button btnNewGame = new TextButton("New game", Skins.craftacular);
-        btnNewGame.setSize(buttonWidth,buttonHeight);
-        btnNewGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(3 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
-        btnNewGame.addListener(new InputListener() {
+        Button btnSingleGame = new TextButton("Single Play", Skins.craftacular);
+        btnSingleGame.setSize(buttonWidth,buttonHeight);
+        btnSingleGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(3 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
+        btnSingleGame.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                final Input.TextInputListener genderInputListener = new Input.TextInputListener() {
+                hostname[0] = null;
+                gamePlay();
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(btnSingleGame);
+
+        Button btnMultiGame = new TextButton("Multi Play", Skins.craftacular);
+        btnMultiGame.setSize(buttonWidth,buttonHeight);
+        btnMultiGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(2 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
+        btnMultiGame.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                final Input.TextInputListener hostnameInputListener = new Input.TextInputListener() {
                     @Override
                     public void input(String text) {
-                        gender[0] = text;
-                        flg[0] = true;
-
+                        hostname[0] = text;
+                        gamePlay();
                     }
 
                     @Override
@@ -55,54 +69,14 @@ public class StartMenuScreen implements Screen {
                         Gdx.input.getTextInput(this, "성별 (m, f)", "", "");
                     }
                 };
-                final Input.TextInputListener islandNameInputListener = new Input.TextInputListener() {
-                    @Override
-                    public void input(String text) {
-                        islandName[0] = text;
-                        Gdx.input.getTextInput(genderInputListener, "성별 (m, f)", "", "");
-                    }
-
-                    @Override
-                    public void canceled() {
-                        Gdx.input.getTextInput(this, "섬 이름", "", "");
-                    }
-                };
-                Input.TextInputListener playerNameInputListener = new Input.TextInputListener() {
-                    @Override
-                    public void input(String text) {
-                        playerName[0] = text;
-                        Gdx.input.getTextInput(islandNameInputListener, "섬 이름", "", "");
-                    }
-
-                    @Override
-                    public void canceled() {
-                        Gdx.input.getTextInput(this, "플레이어 이름", "", "");
-                    }
-                };
-
-                Gdx.input.getTextInput(playerNameInputListener, "플레이어 이름", "", "");
+                Gdx.input.getTextInput(hostnameInputListener, "서버 주소", "", "");
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
         });
-        stage.addActor(btnNewGame);
-
-        Button btnLoadGame = new TextButton("Load game", Skins.craftacular);
-        btnLoadGame.setSize(buttonWidth,buttonHeight);
-        btnLoadGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(2 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
-        btnLoadGame.addListener(new InputListener() {
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-        stage.addActor(btnLoadGame);
+        stage.addActor(btnMultiGame);
 
         Button btnExitGame = new TextButton("Exit game", Skins.craftacular);
         btnExitGame.setSize(buttonWidth,buttonHeight);
@@ -133,7 +107,7 @@ public class StartMenuScreen implements Screen {
         stage.draw();
 
         if (flg[0]) {
-            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0]));
+            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0], hostname[0]));
         }
     }
 
@@ -161,4 +135,47 @@ public class StartMenuScreen implements Screen {
     public void dispose() {
 
     }
+
+    public void gamePlay() {
+        final Input.TextInputListener genderInputListener = new Input.TextInputListener() {
+            @Override
+            public void input(String text) {
+                gender[0] = text;
+                flg[0] = true;
+
+            }
+
+            @Override
+            public void canceled() {
+                Gdx.input.getTextInput(this, "성별 (m, f)", "", "");
+            }
+        };
+        final Input.TextInputListener islandNameInputListener = new Input.TextInputListener() {
+            @Override
+            public void input(String text) {
+                islandName[0] = text;
+                Gdx.input.getTextInput(genderInputListener, "성별 (m, f)", "", "");
+            }
+
+            @Override
+            public void canceled() {
+                Gdx.input.getTextInput(this, "섬 이름", "", "");
+            }
+        };
+        Input.TextInputListener playerNameInputListener = new Input.TextInputListener() {
+            @Override
+            public void input(String text) {
+                playerName[0] = text;
+                Gdx.input.getTextInput(islandNameInputListener, "섬 이름", "", "");
+            }
+
+            @Override
+            public void canceled() {
+                Gdx.input.getTextInput(this, "플레이어 이름", "", "");
+            }
+        };
+
+        Gdx.input.getTextInput(playerNameInputListener, "플레이어 이름", "", "");
+    }
 }
+
