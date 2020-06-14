@@ -13,15 +13,26 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.teameleven.javapracticelab.UsasengCrossing;
 import com.teameleven.javapracticelab.utils.Skins;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
+
 public class StartMenuScreen implements Screen {
     final UsasengCrossing game;
     private Stage stage;
 
     final boolean[] flg = {false};
+    final boolean[] load_flg = {false};
     final String[] playerName = new String[1];
     final String[] islandName = new String[1];
     final String[] gender = new String[1];
     final String[] hostname = new String[1];
+    JOptionPane err_msg = new JOptionPane();
 
     public StartMenuScreen(final UsasengCrossing game) {
         this.game = game;
@@ -30,14 +41,14 @@ public class StartMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         int buttonWidth = Gdx.graphics.getWidth() / 3;
-        int buttonHeight = Gdx.graphics.getHeight() / 6;
+        int buttonHeight = Gdx.graphics.getHeight() / 8;
 
         System.out.println(buttonWidth + "  " + buttonHeight);
 
         // Button
         Button btnSingleGame = new TextButton("Single Play", Skins.craftacular);
         btnSingleGame.setSize(buttonWidth,buttonHeight);
-        btnSingleGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(3 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
+        btnSingleGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),500);
         btnSingleGame.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -50,10 +61,10 @@ public class StartMenuScreen implements Screen {
             }
         });
         stage.addActor(btnSingleGame);
-
+        
         Button btnMultiGame = new TextButton("Multi Play", Skins.craftacular);
         btnMultiGame.setSize(buttonWidth,buttonHeight);
-        btnMultiGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(2 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
+        btnMultiGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),380);
         btnMultiGame.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -78,9 +89,46 @@ public class StartMenuScreen implements Screen {
         });
         stage.addActor(btnMultiGame);
 
+        //로드 게임
+        Button loadGame = new TextButton("Load game", Skins.craftacular);
+        loadGame.setSize(buttonWidth,buttonHeight);
+        loadGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),260);
+        loadGame.addListener(new InputListener() {
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            	
+                try {
+                	File file = new File("save.txt");
+                	FileReader file_reader = new FileReader(file);
+                	BufferedReader bufReader = new BufferedReader(file_reader);
+                	
+                	load_flg[0] = true;
+                	
+                    playerName[0] = bufReader.readLine();
+                    islandName[0] = bufReader.readLine();
+                    gender[0] = bufReader.readLine();
+                     
+                }
+                catch (Exception e) {
+                	err_msg.showMessageDialog(null, "저장된 파일이 없습니다");
+                	return;
+                }
+                
+                
+
+                
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(loadGame);
+        
+        
         Button btnExitGame = new TextButton("Exit game", Skins.craftacular);
         btnExitGame.setSize(buttonWidth,buttonHeight);
-        btnExitGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),(1 * Gdx.graphics.getHeight() / 4) - (buttonHeight / 2));
+        btnExitGame.setPosition((Gdx.graphics.getWidth() /2 ) - (buttonWidth / 2),140);
         btnExitGame.addListener(new InputListener() {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -92,6 +140,8 @@ public class StartMenuScreen implements Screen {
             }
         });
         stage.addActor(btnExitGame);
+        
+        
     }
 
     @Override
@@ -107,6 +157,9 @@ public class StartMenuScreen implements Screen {
         stage.draw();
 
         if (flg[0]) {
+            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0], hostname[0]));
+        }
+        if (load_flg[0]) {
             game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0], hostname[0]));
         }
     }
