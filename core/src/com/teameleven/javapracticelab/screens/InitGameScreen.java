@@ -322,7 +322,7 @@ public class InitGameScreen implements Screen {
     }
     
     public void player_coli_work() {
-    	 //나무테스트
+    	 //나무테스
         if (player_coli_tree == true) {
         	
 	        space_icon.setPosition(player.getX(), player.getY()+175);
