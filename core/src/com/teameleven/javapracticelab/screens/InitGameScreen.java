@@ -112,7 +112,7 @@ public class InitGameScreen implements Screen {
         
         Gdx.app.log("Game mode", hostname == null ? "single-player" : "multi-player");
         
-        //충돌테스트
+        //충돌테스트/
         space_icon = new Space_icon();
         wait_icon = new Wait_icon();
         //
@@ -172,6 +172,7 @@ public class InitGameScreen implements Screen {
         villagers_coli_move.add(false);
         villagers_coli_move.add(false);
         
+        mapSetting();
         
         camera1 = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         camera1.position.set(player.getX(),player.getY(),0);
