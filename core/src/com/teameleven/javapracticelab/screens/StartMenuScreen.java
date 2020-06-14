@@ -21,7 +21,7 @@ public class StartMenuScreen implements Screen {
     final String[] playerName = new String[1];
     final String[] islandName = new String[1];
     final String[] gender = new String[1];
-    final String[] hostname = new String[1];
+    final String[] host = new String[1];
 
     public StartMenuScreen(final UsasengCrossing game) {
         this.game = game;
@@ -41,7 +41,7 @@ public class StartMenuScreen implements Screen {
         btnSingleGame.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                hostname[0] = null;
+                host[0] = null;
                 gamePlay();
             }
             @Override
@@ -57,10 +57,10 @@ public class StartMenuScreen implements Screen {
         btnMultiGame.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                final Input.TextInputListener hostnameInputListener = new Input.TextInputListener() {
+                final Input.TextInputListener hostInputListener = new Input.TextInputListener() {
                     @Override
                     public void input(String text) {
-                        hostname[0] = text;
+                        host[0] = text;
                         gamePlay();
                     }
 
@@ -69,7 +69,7 @@ public class StartMenuScreen implements Screen {
                         Gdx.input.getTextInput(this, "성별 (m, f)", "", "");
                     }
                 };
-                Gdx.input.getTextInput(hostnameInputListener, "서버 주소", "", "");
+                Gdx.input.getTextInput(hostInputListener, "서버 주소", "", "");
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -107,7 +107,7 @@ public class StartMenuScreen implements Screen {
         stage.draw();
 
         if (flg[0]) {
-            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0], hostname[0]));
+            game.setScreen(new InitGameScreen(game, playerName[0], islandName[0], gender[0], host[0]));
         }
     }
 
