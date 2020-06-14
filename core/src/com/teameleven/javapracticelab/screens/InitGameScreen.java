@@ -85,6 +85,7 @@ public class InitGameScreen implements Screen {
     Player player;
     Map_forest map;
     Sea sea;
+    Night_mask night_mask;
     HashMap<String, Player> friendlyPlayers;
     ArrayList<Villager> villagers = new ArrayList<Villager>();
     ArrayList<House> houses = new ArrayList<House>();
@@ -156,10 +157,13 @@ public class InitGameScreen implements Screen {
             playerGender = Gender.FEMALE;
         }
         
+
+        night_mask=new Night_mask();
         map = new Map_forest();
         sea = new Sea();
         player = new Player(playerName, playerGender);
         friendlyPlayers = new HashMap<>();
+        night_mask=new Night_mask();
         
         villagers.add(new Jackson("잭슨", Gender.MALE));
         villagers.add(new Neogul("너굴", Gender.MALE));
@@ -168,7 +172,6 @@ public class InitGameScreen implements Screen {
         villagers_coli_move.add(false);
         villagers_coli_move.add(false);
         
-        mapSetting();
         
         camera1 = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         camera1.position.set(player.getX(),player.getY(),0);
@@ -220,6 +223,7 @@ public class InitGameScreen implements Screen {
         batch.begin();
         sea.action(batch);
         map.action(batch);
+        night_mask.action(batch);
         
         for(House house : houses) {
         	house.action(batch);
