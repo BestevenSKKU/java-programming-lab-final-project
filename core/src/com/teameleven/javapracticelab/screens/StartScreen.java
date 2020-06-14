@@ -19,7 +19,7 @@ public class StartScreen implements Screen {
         this.game = game;
         batch = new SpriteBatch();
 
-        img = new Texture("Intro.png");
+        img = new Texture("Intro2.png");
     }
 
     @Override

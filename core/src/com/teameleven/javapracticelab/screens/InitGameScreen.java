@@ -85,6 +85,7 @@ public class InitGameScreen implements Screen {
     Player player;
     Map_forest map;
     Sea sea;
+    Night_mask night_mask;
     HashMap<String, Player> friendlyPlayers;
     ArrayList<Villager> villagers = new ArrayList<Villager>();
     ArrayList<House> houses = new ArrayList<House>();
@@ -108,9 +109,10 @@ public class InitGameScreen implements Screen {
         this.islandName = islandName;
         this.gender = gender;
         
+        
         Gdx.app.log("Game mode", hostname == null ? "single-player" : "multi-player");
         
-        //충돌테스트
+        //충돌테스트/
         space_icon = new Space_icon();
         wait_icon = new Wait_icon();
         //
@@ -155,10 +157,13 @@ public class InitGameScreen implements Screen {
             playerGender = Gender.FEMALE;
         }
         
+
+        night_mask=new Night_mask();
         map = new Map_forest();
         sea = new Sea();
         player = new Player(playerName, playerGender);
         friendlyPlayers = new HashMap<>();
+        night_mask=new Night_mask();
         
         villagers.add(new Jackson("잭슨", Gender.MALE));
         villagers.add(new Neogul("너굴", Gender.MALE));
@@ -179,13 +184,20 @@ public class InitGameScreen implements Screen {
             this.configSocketEvents();
         }
 
+        player.getInventory().make_all_list();
+        if (load_game == true) {
+        	player.getInventory().loadItem();
+        }
         
-        for(int i=1;i<=100;i++) {
-        	player.getInventory().addItem(new SoftWood());
-        	player.getInventory().addItem(new NormalStones());
-        	player.getInventory().addItem(new Branch());
-        	player.getInventory().addItem(new Vine());
-        	
+        if (!load_game) {
+        
+	        for(int i=1;i<=100;i++) {
+	        	player.getInventory().addItem(new SoftWood());
+	        	player.getInventory().addItem(new NormalStones());
+	        	player.getInventory().addItem(new Branch());
+	        	player.getInventory().addItem(new Vine());
+	        	
+	        }
         }
         // item test
 //        player.getInventory().addItem(new SoftWood());
@@ -212,6 +224,7 @@ public class InitGameScreen implements Screen {
         batch.begin();
         sea.action(batch);
         map.action(batch);
+        night_mask.action(batch);
         
         for(House house : houses) {
         	house.action(batch);

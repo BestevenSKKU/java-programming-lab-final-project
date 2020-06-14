@@ -17,7 +17,7 @@
 - Java JDK
 - Eclipse (or Intellij, Netbeans, etc...)
 
-### 1. Clone Project
+### 1. Prepare or clone project.
 ```shell
 $ git clone https://github.com/BestevenSKKU/java-programming-lab-final-project.git
 ```
