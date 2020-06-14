@@ -405,7 +405,7 @@ public class InitGameScreen implements Screen {
         	}
         }
         
-    	if(!isCollition_for_move(map, player)) {
+    	if(!isCollition(map, player)) {
     		player_coli_move = true;
     	}
         
@@ -443,6 +443,10 @@ public class InitGameScreen implements Screen {
         		break;
         	}
         	else {player_coli_pond = false;}
+        }
+        
+        if(!isCollition_for_move(map, player)) {
+        	player_coli_pond = true;
         }
     }
 
