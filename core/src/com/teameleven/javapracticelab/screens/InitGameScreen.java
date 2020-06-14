@@ -49,6 +49,7 @@ public class InitGameScreen implements Screen {
     private Stage stage;
     private Label lblPlayer;
     private Label lblIsland;
+    private Label lblHelp;
     private Music Bgm;
     
     //상호작용 테스트
@@ -123,7 +124,12 @@ public class InitGameScreen implements Screen {
         lblIsland.setPosition(+10,650);
         lblIsland.setAlignment(Align.left);
         stage.addActor(lblIsland);
-
+        lblHelp = new Label("조작법: H", Skins.korean, "black");
+        lblHelp.setSize(Gdx.graphics.getWidth(),row_height);
+        lblHelp.setPosition(+10,600);
+        lblHelp.setAlignment(Align.left);
+        stage.addActor(lblHelp);
+        
         Gender playerGender = Gender.MALE;
         if (gender.equals("F") || gender.equals("f")) {
             playerGender = Gender.FEMALE;
@@ -249,6 +255,9 @@ public class InitGameScreen implements Screen {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.C)) {
         	game.setScreen(new CraftingScreen( game, (InitGameScreen)game.getScreen(), player ));
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.H)) {
+        	game.setScreen(new HelpScreen( game, (InitGameScreen)game.getScreen(), player ));
         }
         
     }
@@ -763,11 +772,6 @@ public class InitGameScreen implements Screen {
         stones.add(new Stone(1000,100));
         stones.add(new Stone(1100,100));
         stones.add(new Stone(1200,100));
-        stones.add(new Stone(-100,100));
-        stones.add(new Stone(-100,200));
-        stones.add(new Stone(-100,300));
-        stones.add(new Stone(-100,400));
-        stones.add(new Stone(-100,500));
         stones.add(new Stone(-1100,600));
         stones.add(new Stone(-1100,700));
         stones.add(new Stone(-1100,800));
