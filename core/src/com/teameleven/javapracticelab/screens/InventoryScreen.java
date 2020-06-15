@@ -138,30 +138,21 @@ public class InventoryScreen implements Screen {
         HashMap<String, Integer> map = this.player.getInventory().getItemList();
 
         int i = 0;
+        int j = 0;
+        int xPos = 250;
+        
         for(final Map.Entry<String, Integer> elem : map.entrySet())  {
             itemList.add(new Label(elem.getKey() + " : " + elem.getValue(),Skins.korean, "black"));
             itemList.get(i).setAlignment(Align.left);
-            itemList.get(i).setPosition(250,550-i*50);
+            itemList.get(i).setPosition(xPos,550-j*50);
             stage.addActor(itemList.get(i));
             
-            buttonList.add(new TextButton("Use", Skins.craftacular));
-            buttonList.get(i).setSize(100,40);
-            buttonList.get(i).setPosition(630,550-i*50);
-            buttonList.get(i).addListener(new InputListener() {
-                @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                	System.out.println("use " + elem.getKey());
-                	//기능 구현 필요 (단순히 String이 아니라 실제 클래스로 건드려야지 기능 구현이 가능할듯?) 
-                	//먹는 아이템일 경우 사용시 포만감 획득, item 어레이에서 1개 제거, 0개 이하에서 사용할시 오류문구
-                	//업데이트 함수를 새로 만들어서 사용할시 현재 표기되는 수를 줄여야함
-                }
-                @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                    return true;
-                }
-            });
-            //stage.addActor(buttonList.get(i));
+            if(j>=9) {
+            	xPos = 550;
+            	j = -1;
+            }
             i++;
+            j++;
         }
 
     }

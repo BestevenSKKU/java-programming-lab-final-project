@@ -185,14 +185,15 @@ public class InitGameScreen implements Screen {
         }
         
         if (!load_game) {
-        
-	        for(int i=1;i<=100;i++) {
-	        	player.getInventory().addItem(new SoftWood());
+
 	        	player.getInventory().addItem(new NormalStones());
+	        	player.getInventory().addItem(new Branch());
+	        	player.getInventory().addItem(new Branch());
+	        	player.getInventory().addItem(new Branch());
+	        	player.getInventory().addItem(new Branch());
 	        	player.getInventory().addItem(new Branch());
 	        	player.getInventory().addItem(new Vine());
 	        	
-	        }
         }
         // item test
 //        player.getInventory().addItem(new SoftWood());
@@ -813,11 +814,11 @@ public class InitGameScreen implements Screen {
         
         ponds.add(new Pond(-1000, 100));
 
-        ponds.add(new Pond(-1000, 1000));
+        ponds.add(new Pond(-1100, 1200));
         
         trees.add(new Tree(-1000,1300));
         trees.add(new Tree(-200,700));
-        trees.add(new Tree(1000,700));
+        trees.add(new Tree(950,700));
         trees.add(new Tree(300,200));
         trees.add(new Tree(-300,-400));
         trees.add(new Tree(-300,-700));
