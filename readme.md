@@ -29,13 +29,34 @@ $ git clone https://github.com/BestevenSKKU/java-programming-lab-final-project.g
 4. if **Usaeng-Crossing-core**, **Usaeng-Crossing-desktop**, and **java-programming-lab-final-project** have been created, the environment is ready
 
 ### 3-1. Run Project
-1. Set execution File **DesktopLauncher.java**
-2. Set path
-    > Usaeng-Crossing-desktop/src/com.teameleven.javapracticelab.desktop/DesktopLauncher.java
-3. Run
+1. Open Run Configurations
+2. Craete New Java Application
+    - Name : DesktopLauncher
+    - Project : Usaeng-Crossing-desktop
+    - Main class : com.teameleven.javapracticelab.desktop.DesktopLauncher
+    ![eclipse_run_setting](img/eclipse_run_setting.png)
 
+3. Run
+4. If you want to enter server to play multi-player mode, enter **usaeng-crossing.kro.kr**. It is test public server.
+    - Note: Do not type **http://**. Only input domain or ip.
+    - Or you can make your own server following ___3-2. Run Own Server___ Part
+    
 ### 3-2. Run Own Server (optional)
-1. 나중에 써야지
+#### 1) Run with node.js
+1. Enter server/ directory
+2. Open terminal
+3. Run
+    ```shell
+   $ npm install
+   $ npm start
+    ```
+4. Access 127.0.0.1:8080 at multi-player mode
+
+#### 2) Run without node.js (Use Execute File)
+1. Enter server/ directory
+2. Open terminal
+3. Run index-win.exe
+4. Access 127.0.0.1:8080 at multi-player mode
 
 ### 4. Game Guide
 - This game is based on the recently famous game Animal crossing(모여봐요 동물의 숲).
@@ -61,10 +82,6 @@ $ git clone https://github.com/BestevenSKKU/java-programming-lab-final-project.g
 - [`Express`](https://expressjs.com/ko/)
 - [`socket.io`](https://socket.io/)
 
-
-
-### Alert
-1. 나중에 써야지
 
 ---
 
