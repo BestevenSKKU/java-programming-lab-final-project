@@ -152,4 +152,29 @@ public class Player extends Sprite {
     public Gender getGender() {
         return this.gender;
     }
+    
+//    @Override
+//	public float getX() {
+//		return positionX+100;
+//		
+//	}
+//	
+//	@Override
+//	public float getY() {
+//		return positionY+100;
+//		
+//	}
+//	
+//	@Override
+//	public float getWidth() {
+//		return Width-200;
+//		
+//	}
+//	
+	@Override
+	public float getHeight() {
+		return 140;
+		
+	}
+    
 }

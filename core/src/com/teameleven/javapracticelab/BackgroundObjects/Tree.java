@@ -14,6 +14,7 @@ import com.teameleven.javapracticelab.utils.Gender;
 public class Tree extends Sprite {
 	float positionX = 0.0f;
 	float positionY = 0.0f;
+	float Height = 360;
 	
 	public Tree(float positionX, float positionY) {
 		super(new Texture("Tree.png"));
@@ -25,5 +26,10 @@ public class Tree extends Sprite {
         this.setPosition(positionX, positionY);
         this.draw(batch);
     }
+	
+	public float getHeight() {
+		return Height;
+		
+	}
 	
 }

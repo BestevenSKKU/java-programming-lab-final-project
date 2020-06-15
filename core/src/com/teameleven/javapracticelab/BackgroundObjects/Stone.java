@@ -14,6 +14,7 @@ import com.teameleven.javapracticelab.utils.Gender;
 public class Stone extends Sprite {
 	float positionX = 0.0f;
 	float positionY = 0.0f;
+	float Height = 150;
 	
 	public Stone(float positionX, float positionY) {
 		super(new Texture("Stone.png"));
@@ -26,4 +27,8 @@ public class Stone extends Sprite {
         this.draw(batch);
     }
 	
+	public float getHeight() {
+		return Height;
+		
+	}
 }

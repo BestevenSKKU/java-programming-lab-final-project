@@ -41,7 +41,7 @@ public class mapForest extends Sprite {
 	
 	@Override
 	public float getHeight() {
-		return Height-200;
+		return Height-130;
 		
 	}
 	

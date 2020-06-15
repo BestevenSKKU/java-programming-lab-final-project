@@ -9,7 +9,7 @@ public class House extends Sprite {
 	boolean isPlayerHouse;
 	float positionX = 0.0f;
 	float positionY = 0.0f;
-	
+	float Height = 275;
 	
 	public House(boolean isPlayerHouse, float positionX, float positionY) {
 		super(isPlayerHouse == true ? new Texture("house_player.png") : new Texture("house_villager.png"));
@@ -22,5 +22,10 @@ public class House extends Sprite {
         this.setPosition(positionX, positionY);
         this.draw(batch);
     }
+	
+	public float getHeight() {
+		return Height;
+		
+	}
 	
 }
